@@ -19,8 +19,8 @@ public class Metersoorten {
 	 * This ID is generate by the database. It has the primary key and therefore should be unique.
 	 */
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 	
 	/**
 	 * Descriptive text of the meter.
@@ -29,11 +29,11 @@ public class Metersoorten {
 
 	//-----------// GETTER AND SETTERS //-----------//
 	
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
