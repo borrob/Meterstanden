@@ -46,7 +46,7 @@
 			    		</tr>
 					</c:forEach>
 				</table>
-				<button class="btn" id="addNewMeterstandButton">ADD</button>
+				<button class="btn" id="addNewMeterstandButton" onclick="$('#addNewMeterstandenModal').modal()">Toevoegen</button>
 			</div>
 		</div>
     </jsp:body>
