@@ -24,12 +24,8 @@
         		<label for="deMeter" class="col-sm-2 control-label">Metertype</label>
         		<div class="col-sm-10">
 	        		<select name="deMeter" id="deMeter">
-	<%--         		TODO: vullen met waarden van Metersoorten en vullen met huidige selectie--%>
 						<c:forEach items="${theMetersoorten }" var="soort">
 							<option value="${soort.id }">${soort.metersoort }</option>
-<!-- 		        			<option value="1">1</option> -->
-<!-- 		        			<option value="2">2</option> -->
-<!-- 		        			<option value="3">3</option> -->
 	        			</c:forEach>
 	        		</select>
         		</div>
