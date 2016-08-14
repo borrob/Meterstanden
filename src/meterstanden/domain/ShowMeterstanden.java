@@ -66,7 +66,7 @@ public class ShowMeterstanden extends HttpServlet {
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		
-		int selectieInt = Integer.valueOf(selectie);
+		Long selectieInt = Long.valueOf(selectie);
 		Metersoorten metersoort = null;
 		boolean useSelection = selectieInt>0;
 		
