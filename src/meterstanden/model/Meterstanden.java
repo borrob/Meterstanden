@@ -46,6 +46,18 @@ public class Meterstanden {
 	@JoinColumn(name="id_metersoort", referencedColumnName="id")
 	private Metersoorten metersoort;
 
+	//-----------// CONSTRUCTORS //-----------//
+	public Meterstanden(){
+		super();
+	}
+	
+	public Meterstanden(Date datum, float waarde, String omschrijving, Metersoorten ms){
+		this.datum=datum;
+		this.waarde=waarde;
+		this.omschrijving=omschrijving;
+		this.metersoort=ms;
+	}
+	
 	//-----------// GETTERS & SETTERS //-----------//
 	public Long getId() {
 		return id;
