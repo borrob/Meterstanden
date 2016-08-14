@@ -6,8 +6,6 @@ import javax.persistence.*;
  * The mapping of table "metersoorten" to java object.
  * 
  * @author rob
- * @version 0.1
- * @since 0.1
  *
  */
 @Entity

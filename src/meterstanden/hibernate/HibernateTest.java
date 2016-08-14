@@ -14,8 +14,6 @@ import meterstanden.model.Meterstanden;
 
 /**
  * @author rob
- * @version 0.1
- * @since 0.1
  */
 @SuppressWarnings("deprecation")
 public class HibernateTest {

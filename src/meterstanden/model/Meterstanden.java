@@ -7,8 +7,6 @@ import javax.persistence.*;
 
 /**
  * @author rob
- * @version 0.1
- * @since 0.1
  *
  */
 @Entity
