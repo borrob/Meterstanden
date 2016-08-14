@@ -10,3 +10,10 @@ hs_err_pid*
 
 # other
 *.log
+*.DS_Store
+.classpath
+.dbeaver-data-sources.xml
+.project
+*.swp
+.settings
+target
