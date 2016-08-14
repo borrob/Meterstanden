@@ -1,6 +1,7 @@
 package meterstanden.hibernate;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -66,4 +67,25 @@ public class HibernateUtil {
 		getSessionFactory().close();
 	}
 
+	/**
+	 * Persists an object of Meterstanden into the database.
+	 * 
+	 * @param ms the Meterstanden object to add
+	 * @return true if succes, false if no succes
+	 */
+	public static boolean persistMeterstand(Meterstanden ms){
+		Session session = getSessionFactory().openSession();
+		try{
+			session.beginTransaction();
+			session.save(ms);
+			session.getTransaction().commit();
+			log.info("New meterstand added.");
+		} catch (Exception e) {
+			log.error("Could not save meterstand, got error: " + e.toString() + "for meterstand: " + ms.toString());
+			return false;
+		} finally {
+			session.close();
+		}
+		return true;
+	}
 }
