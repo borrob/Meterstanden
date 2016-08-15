@@ -17,3 +17,6 @@ hs_err_pid*
 *.swp
 .settings
 target
+
+#derby db
+resources/run_derby/meterstanden/*
