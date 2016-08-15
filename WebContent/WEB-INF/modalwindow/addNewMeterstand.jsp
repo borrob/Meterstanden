@@ -53,14 +53,15 @@
 </div>
 <script>
 $('#bewaarEnSluitKnopNieuweMeterstand').on("click", function(){
-	$.post("newMeterstand",
-			{	deDatum: $('#deDatum')[0].value,
-				deMeter: $("#deMeter")[0].value,
-				deStand: $("#deStand")[0].value,
-				deOpmerking: $("#deOpmerking")[0].value
-			}
-	).done(function(){
-		location.reload();
-	})
+// 	$.post("newMeterstand",
+// 			{	deDatum: $('#deDatum')[0].value,
+// 				deMeter: $("#deMeter")[0].value,
+// 				deStand: $("#deStand")[0].value,
+// 				deOpmerking: $("#deOpmerking")[0].value
+// 			}
+// 	).done(function(){
+// 		//location.reload();
+// 	})
+$('#nieuwMeterstandForm').submit();
 });
 </script>

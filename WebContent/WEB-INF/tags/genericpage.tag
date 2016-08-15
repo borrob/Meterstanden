@@ -1,6 +1,8 @@
 <%@tag description="Overall Page template" pageEncoding="UTF-8"%>
 <%@attribute name="header" fragment="true" %>
 <%@attribute name="footer" fragment="true" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -20,6 +22,16 @@
   	<body>
   		<div class="container">
 	    	<div id="pageheader" class="page-header">
+	    		<c:if test="${! empty message}">
+		    		<div class="row">
+	    				<div class="col-xs-12">
+	    					<div class="alert alert-info alert-dismissible" role="alert">
+	    						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	    						${message}
+	    					</div>
+		      			</div>
+		      		</div>
+	    		</c:if>
    	    		<div class="row">
     				<div class="col-xs-12">
 	      				<jsp:invoke fragment="header"/>

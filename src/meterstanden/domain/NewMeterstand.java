@@ -57,6 +57,8 @@ public class NewMeterstand extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String message = "";
+		
 		if (checkParameterExistance(request)){	
 			
 			Date datum = parseDatum(request.getParameter("deDatum"));
@@ -69,25 +71,30 @@ public class NewMeterstand extends HttpServlet {
 				Meterstanden newMeterstand = new Meterstanden(datum, waarde, opmerking, meter);
 				
 				if (HibernateUtil.persistMeterstand(newMeterstand)){
-					//TODO: notify user
+					message += "De nieuwe meterstand is toegevoegd.<br/>";
 				} else {
 					//error with persisingMeterstand
 					log.error("Could not save meterstand: " + newMeterstand.toString());
-					//TODO: notify user
+					message += "Het is niet gelukt om de nieuwe meterstand toe te voegen.<br/>";
 				}
 			} else {
 				//parameters not ok
-				//TODO: notify user
+				message += "De invoerparameters waren niet OK.<br/>";
 			} 
 		} else {
 			//parameter do not exist
-			//TODO: notify user
+			message += "De invoerparameters waren niet volledig.<br/>";
 		}
 		
-		//Redirect to the page referring page
+		if (message.length()>0){message=message.substring(0, message.length()-"<br/>".length());}
+		if (request.getParameterMap().containsKey("message")){
+			String message_org = (String)request.getAttribute("message");
+			if (message_org.length()>0){message += message_org + "<br/>" + message;}
+		}
+		request.setAttribute("message", message);
+		//Redirect to show the last meterstanden
 		//TODO: set selection of metersoort
-		String referrer = request.getHeader("referer");
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(referrer.substring(referrer.lastIndexOf("/")));
+		RequestDispatcher rd = getServletContext().getRequestDispatcher("/ShowMeterstanden");
 		rd.forward(request, response);
 	}
 	

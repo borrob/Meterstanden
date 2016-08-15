@@ -36,7 +36,13 @@ public class ShowMetersoorten extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String message="";
 		request.setAttribute("theMetersoorten", getMetersoorten());
+		
+		if (message.length()>0){message=message.substring(0, message.length()-"<br/>".length());}
+		String message_org = (String)request.getAttribute("message");
+		if (message_org != null){message += message_org + "<br/>" + message;}
+		request.setAttribute("message", message);
 
 		RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/ShowMetersoorten.jsp");
 		rd.forward(request, response);
