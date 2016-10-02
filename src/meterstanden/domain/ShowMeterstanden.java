@@ -37,7 +37,6 @@ public class ShowMeterstanden extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String message = "";
 		String selectie;
 		if (request.getParameterMap().containsKey("selection")){
 			selectie = request.getParameter("selection");
@@ -48,11 +47,6 @@ public class ShowMeterstanden extends HttpServlet {
 		request.setAttribute("theMeterstanden", getLastMeterstanden(selectie));
 		request.setAttribute("theMetersoorten", getMetersoorten());
 		request.setAttribute("selectedMetersoort", selectie);
-
-		if (message.length()>0){message=message.substring(0, message.length()-"<br/>".length());}
-		String message_org = (String)request.getAttribute("message");
-		if (message_org != null){message += message_org + "<br/>" + message;}
-		request.setAttribute("message", message);
 
 		RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/ShowMeterstanden.jsp");
 		rd.forward(request, response);

@@ -57,7 +57,7 @@ public class NewMeterstand extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String message = "";
+		String message;
 		
 		if (checkParameterExistance(request)){	
 			
@@ -71,26 +71,21 @@ public class NewMeterstand extends HttpServlet {
 				Meterstanden newMeterstand = new Meterstanden(datum, waarde, opmerking, meter);
 				
 				if (HibernateUtil.persistMeterstand(newMeterstand)){
-					message += "De nieuwe meterstand is toegevoegd.<br/>";
+					message = "De nieuwe meterstand is toegevoegd.<br/>";
 				} else {
 					//error with persisingMeterstand
 					log.error("Could not save meterstand: " + newMeterstand.toString());
-					message += "Het is niet gelukt om de nieuwe meterstand toe te voegen.<br/>";
+					message = "Het is niet gelukt om de nieuwe meterstand toe te voegen.<br/>";
 				}
 			} else {
 				//parameters not ok
-				message += "De invoerparameters waren niet OK.<br/>";
+				message = "De invoerparameters waren niet OK.<br/>";
 			} 
 		} else {
 			//parameter do not exist
-			message += "De invoerparameters waren niet volledig.<br/>";
+			message = "De invoerparameters waren niet volledig.<br/>";
 		}
-		
-		if (message.length()>0){message=message.substring(0, message.length()-"<br/>".length());}
-		if (request.getParameterMap().containsKey("message")){
-			String message_org = (String)request.getAttribute("message");
-			if (message_org.length()>0){message += message_org + "<br/>" + message;}
-		}
+
 		request.setAttribute("message", message);
 		//Redirect to show the last meterstanden
 		//TODO: set selection of metersoort
