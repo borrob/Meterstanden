@@ -19,4 +19,5 @@ hs_err_pid*
 target
 
 #derby db
-resources/run_derby/meterstanden/*
+resources/run_derby/meterstanden/*/*.dat
+resources/run_derby/meterstanden/log/
