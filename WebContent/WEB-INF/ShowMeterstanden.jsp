@@ -50,7 +50,7 @@
 					</c:forEach>
 				</table>
 				<script>$('.removeMeterstandButton').on("click", function(){
-					$('#verwijderEnSluitKnopNieuweMeterstand')[0].setAttribute('href', "deleteMeterstand?id="+this.getAttribute("id"));
+					$('#verwijderEnSluitKnopNieuweMeterstand')[0].setAttribute('href', "DeleteMeterstand?id="+this.getAttribute("id"));
 					$('#deleteMeterstandModal').modal();
 				})</script>
 				<button class="btn" id="addNewMeterstandButton" onclick="$('#addNewMeterstandenModal').modal()">Toevoegen</button>

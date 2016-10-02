@@ -71,7 +71,7 @@ public class HibernateUtil {
 	 * Persists an object of Meterstanden into the database.
 	 * 
 	 * @param ms the Meterstanden object to add
-	 * @return true if succes, false if no succes
+	 * @return true if success, false if failure.
 	 */
 	public static boolean persistMeterstand(Meterstanden ms){
 		Session session = getSessionFactory().openSession();
@@ -82,6 +82,29 @@ public class HibernateUtil {
 			log.info("New meterstand added.");
 		} catch (Exception e) {
 			log.error("Could not save meterstand, got error: " + e.toString() + "for meterstand: " + ms.toString());
+			return false;
+		} finally {
+			session.close();
+		}
+		return true;
+	}
+	
+	/**
+	 * Delete an entry of meterstand from the database.
+	 * 
+	 * @param id the id of the meterstand to delete.
+	 * @return true if success, false if failure.
+	 */
+	public static boolean deleteMeterstand(Long id){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			Meterstanden ms = session.get(Meterstanden.class, id);
+			session.delete("Meterstanden", ms);
+			session.getTransaction().commit();
+			log.debug("Meterstand with id = " + Long.valueOf(id) + " is deleted.");
+		} catch (Exception e) {
+			log.error("Could not delete meterstand. Got error: " + e.toString() + " for meterstand: " + Long.valueOf(id));
 			return false;
 		} finally {
 			session.close();

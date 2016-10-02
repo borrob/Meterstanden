@@ -14,7 +14,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Sluit</button>
-        <button type="button" class="btn btn-primary" id="verwijderEnSluitKnopNieuweMeterstand" href='vervang'>Verwijder en sluit</button>
+        <a type="button" class="btn btn-primary" id="verwijderEnSluitKnopNieuweMeterstand" href='vervang'>Verwijder en sluit</a>
       </div>
     </div>
   </div>

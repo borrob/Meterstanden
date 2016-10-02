@@ -42,7 +42,7 @@ public class Meterstanden {
 	/**
 	 * Metersoort of this meterstand
 	 */
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.REFRESH)
 	@JoinColumn(name="id_metersoort", referencedColumnName="id")
 	private Metersoorten metersoort;
 
