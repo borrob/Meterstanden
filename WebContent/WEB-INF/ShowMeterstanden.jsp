@@ -12,6 +12,7 @@
     
 		<%-- Add the modal window to to add new meterstand --%>
     	<jsp:include page="/WEB-INF/modalwindow/addNewMeterstand.jsp"/>
+    	<jsp:include page="/WEB-INF/modalwindow/deleteMeterstand.jsp"/>
     	
     	<div class="row">
 	    	<div class="col-xs-12">
@@ -35,6 +36,7 @@
 		        		<th>meter</th>
 		        		<th>waarde</th>
 		        		<th>opmerking</th>
+		        		<th></th>
 		        	</tr></thead>
 		        	<c:forEach items="${theMeterstanden}" var="ms">
 			    		<tr>
@@ -42,10 +44,15 @@
 					        <td><c:out value="${ms.datum}"/></td>
 					        <td><c:out value="${ms.metersoort.metersoort}"/></td>
 					        <td><c:out value="${ms.waarde}"/></td>
-					        <td><c:out value="${ms.omschrijving}"/></td>  
+					        <td><c:out value="${ms.omschrijving}"/></td>
+					        <td><span class="glyphicon glyphicon-remove removeMeterstandButton" aria-hidden="true" id ="removeMeterstandButtonID_${ms.id}"></span></td>  
 			    		</tr>
 					</c:forEach>
 				</table>
+				<script>$('.removeMeterstandButton').on("click", function(){
+					$('#verwijderEnSluitKnopNieuweMeterstand')[0].setAttribute('href', "DeleteMeterstand?id="+this.getAttribute("id"));
+					$('#deleteMeterstandModal').modal();
+				})</script>
 				<button class="btn" id="addNewMeterstandButton" onclick="$('#addNewMeterstandenModal').modal()">Toevoegen</button>
 			</div>
 		</div>
