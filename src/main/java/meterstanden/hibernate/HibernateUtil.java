@@ -45,7 +45,7 @@ public class HibernateUtil {
 			
 			log.debug("Creating a new SessionFactory.");
 			Configuration config = new Configuration();
-			config.configure("hibernate.cfg.xml");
+			config.configure("/hibernate.cfg.xml");
 			config.addAnnotatedClass(Metersoorten.class);
 			config.addAnnotatedClass(Meterstanden.class);
 			

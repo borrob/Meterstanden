@@ -26,7 +26,7 @@
     </plugins>
     <resources>
       <resource>
-        <directory>/Users/rob/Develop/Eclipse/meterstanden/src/resources</directory>
+        <directory>/Users/rob/Develop/Eclipse/meterstanden/src/main/resources</directory>
       </resource>
     </resources>
   </build>
