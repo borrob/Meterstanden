@@ -21,3 +21,5 @@ target
 #derby db
 resources/run_derby/meterstanden/*/*.dat
 resources/run_derby/meterstanden/log/
+src/main/resources/run_derby/meterstanden
+src/main/resources/run_derby/derby.log
