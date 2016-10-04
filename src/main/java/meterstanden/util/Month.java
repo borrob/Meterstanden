@@ -3,6 +3,7 @@ package main.java.meterstanden.util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Query;
 
@@ -31,7 +32,7 @@ public class Month {
 			return last.getWaarde();
 		} else {
 			long timeBetween= last.getDatum().getTime() - first.getDatum().getTime();
-			Date maandDag = parseDatum(Integer.toString(year) + "-" + Integer.toString(month) + "01");
+			Date maandDag = parseDatum("01-" + Integer.toString(month) + "-" + Integer.toString(year));
 			long timeToStart = maandDag.getTime() - first.getDatum().getTime();
 			log.debug("timeBetween: " + Long.toString(timeBetween) + " - timeToStart: " + Long.toString(timeToStart));
 			
@@ -46,17 +47,17 @@ public class Month {
 		hql.append("where m.metersoort = :metersoort ");
 		
 		if(before){
-			hql.append("and datum <= '").append(String.valueOf(year)).append("-").append(String.valueOf(month)).append("'");
+			hql.append("and datum <= '").append(String.valueOf(year)).append("-").append(String.valueOf(month)).append("-01'");
 			hql.append(" order by datum desc");
 		} else {
-			hql.append("and datum >= '").append(String.valueOf(year)).append("-").append(String.valueOf(month)).append("'");
+			hql.append("and datum >= '").append(String.valueOf(year)).append("-").append(String.valueOf(month)).append("-01'");
 			hql.append(" order by datum asc");
 		}
 		
 		Query query = s.createQuery(hql.toString());
 		query.setParameter("metersoort", ms);
 		query.setMaxResults(1);
-		
+		List<?> r = query.getResultList();
 		Meterstanden result = (Meterstanden)query.getResultList().get(0);
 		//TODO: add try, catch and raise error
 		
