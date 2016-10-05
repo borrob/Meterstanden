@@ -3,7 +3,6 @@ package main.java.meterstanden.util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Query;
 
@@ -36,7 +35,12 @@ public class Month {
 			long timeToStart = maandDag.getTime() - first.getDatum().getTime();
 			log.debug("timeBetween: " + Long.toString(timeBetween) + " - timeToStart: " + Long.toString(timeToStart));
 			
-			float result = first.getWaarde() + timeToStart/timeBetween * (last.getWaarde() - first.getWaarde());
+			float result = first.getWaarde() + (float)timeToStart/timeBetween * (last.getWaarde() - first.getWaarde());
+			
+			log.trace("First: " + Float.toString(first.getWaarde()));
+			log.trace("Result: " + Float.toString(result));
+			log.trace("Last: " + Float.toString(last.getWaarde()));
+			
 			return result;
 		}
 	}
@@ -57,7 +61,6 @@ public class Month {
 		Query query = s.createQuery(hql.toString());
 		query.setParameter("metersoort", ms);
 		query.setMaxResults(1);
-		List<?> r = query.getResultList();
 		Meterstanden result = (Meterstanden)query.getResultList().get(0);
 		//TODO: add try, catch and raise error
 		
