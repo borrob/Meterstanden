@@ -24,6 +24,7 @@ public class Month {
 	 * @param year the year
 	 * @param ms the Metersoorten you want the value of
 	 * @return the meterstand value of Metersoorten ms for mont - year.
+	 * @throws IndexOutOfBoundsException If there is no meterstand to get.
 	 */
 	public static float getMonth(int month, int year, Metersoorten ms) throws IndexOutOfBoundsException{
 
@@ -63,6 +64,17 @@ public class Month {
 		}
 	}
 	
+	/**
+	 * Get the meterstand for the next month.
+	 * 
+	 * (Should be equal to the meterstand of the last day of this month)
+	 * 
+	 * @param month the current month
+	 * @param year the current year
+	 * @param ms the Metersoort you want the reading of
+	 * @return the reading of the Meterstand for the next month
+	 * @throws IndexOutOfBoundsException if there is no meterstand to get.
+	 */
 	public static float getNextMonth(int month, int year, Metersoorten ms) throws IndexOutOfBoundsException{
 		if (month == 12){
 			month = 0;
@@ -71,12 +83,35 @@ public class Month {
 		return getMonth(month + 1, year, ms);
 	}
 
+	/**
+	 * Get the usage of a Metersoorten for a specific month.
+	 * 
+	 * The Meterstanden values for the beginning and the end of the month are calculated (interpolation)
+	 * and the difference between them is returned as the usage.
+	 * 
+	 * @param month the month
+	 * @param year the year
+	 * @param ms the Metersoort
+	 * @return the usage of the Metersoort in this specific month
+	 * @throws IndexOutOfBoundsException If the usage cannot be calculated.
+	 */
 	public static float getMonthUsage(int month, int year, Metersoorten ms) throws IndexOutOfBoundsException{
 		float start = getMonth(month, year, ms);
 		float end = getNextMonth(month, year, ms);
 		return end - start;
 	}
 	
+	/**
+	 * Get the meterstand for this month.
+	 * 
+	 * @param s an open hibernate session to query the database
+	 * @param month the month
+	 * @param year the year
+	 * @param ms the Metersoorten
+	 * @param before true if you want the last meterstand before the first of this month, false if you want the first meterstand after the first of this month
+	 * @return the reading of the meterstand
+	 * @throws IndexOutOfBoundsException If there was an error getting the meterstand
+	 */
 	private static Meterstanden getMeterstand(Session s, int month, int year, 
 			Metersoorten ms, boolean before) throws IndexOutOfBoundsException{
 
@@ -86,10 +121,12 @@ public class Month {
 		hql.append("where m.metersoort = :metersoort ");
 		
 		if(before){
-			hql.append("and datum <= '").append(String.valueOf(year)).append("-").append(String.valueOf(month)).append("-01'");
+			hql.append("and datum <= '").append(String.valueOf(year)).append("-").
+				append(String.valueOf(month)).append("-01'");
 			hql.append(" order by datum desc");
 		} else {
-			hql.append("and datum >= '").append(String.valueOf(year)).append("-").append(String.valueOf(month)).append("-01'");
+			hql.append("and datum >= '").append(String.valueOf(year)).append("-").
+				append(String.valueOf(month)).append("-01'");
 			hql.append(" order by datum asc");
 		}
 		
@@ -109,10 +146,16 @@ public class Month {
 		return result;
 	}
 	
-	private static Date parseDatum(String datumstring){
-		//TODO: javadoc
-		
+	
+	/**
+	 * Parse the datumString to a Date object
+	 * 
+	 * @param datumstring the text with the data
+	 * @return a parsed Date object
+	 */
+	private static Date parseDatum(String datumstring){		
 		Date datum = null;
+		
 		SimpleDateFormat sdf = new SimpleDateFormat ("dd-MM-yyyy");
 		
 		try {
