@@ -45,5 +45,32 @@ public class TestMonth {
 		assertTrue(calculatedMeterstand >= lowest.getWaarde());
 		assertTrue(calculatedMeterstand <= highest.getWaarde());
 	}
+	
+	@Test
+	public void testNextMonth(){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		
+		Metersoorten ms = session.get(Metersoorten.class, 1L);
+		float calculatedMeterstand = Month.getMonth(6, 2016, ms);
+		float calculatedMeterstand2 = Month.getNextMonth(5, 2016, ms);
+		
+		session.close();
+				
+		assertTrue(calculatedMeterstand == calculatedMeterstand2);
+	}
+	
+	@Test
+	public void testUsage(){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		
+		Metersoorten ms = session.get(Metersoorten.class, 1L);
+		float usage = Month.getMonthUsage(6, 2016, ms);
+		
+		log.debug("The usage is: " + Float.toString(usage));
+		
+		session.close();
+		
+		assertTrue(usage>0);
+	}
 
 }

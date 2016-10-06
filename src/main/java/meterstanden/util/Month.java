@@ -33,7 +33,7 @@ public class Month {
 			long timeBetween= last.getDatum().getTime() - first.getDatum().getTime();
 			Date maandDag = parseDatum("01-" + Integer.toString(month) + "-" + Integer.toString(year));
 			long timeToStart = maandDag.getTime() - first.getDatum().getTime();
-			log.debug("timeBetween: " + Long.toString(timeBetween) + " - timeToStart: " + Long.toString(timeToStart));
+			log.trace("timeBetween: " + Long.toString(timeBetween) + " - timeToStart: " + Long.toString(timeToStart));
 			
 			float result = first.getWaarde() + (float)timeToStart/timeBetween * (last.getWaarde() - first.getWaarde());
 			
@@ -43,6 +43,20 @@ public class Month {
 			
 			return result;
 		}
+	}
+	
+	public static float getNextMonth(int month, int year, Metersoorten ms){
+		if (month == 12){
+			month = 0;
+			year ++;
+		}
+		return getMonth(month + 1, year, ms);
+	}
+
+	public static float getMonthUsage(int month, int year, Metersoorten ms){
+		float start = getMonth(month, year, ms);
+		float end = getNextMonth(month, year, ms);
+		return end - start;
 	}
 	
 	private static Meterstanden getMeterstand(Session s, int month, int year, Metersoorten ms, boolean before){
