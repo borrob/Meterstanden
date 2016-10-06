@@ -17,20 +17,38 @@ public class Month {
 	
 	private static final Logger log = Logger.getLogger(Month.class);
 	
-	public static float getMonth(int month, int year, Metersoorten ms){
+	/**
+	 * Get the meterstand value on the first of the month
+	 * 
+	 * @param month the month of the year (Jan=1, Feb=2, ...)
+	 * @param year the year
+	 * @param ms the Metersoorten you want the value of
+	 * @return the meterstand value of Metersoorten ms for mont - year.
+	 */
+	public static float getMonth(int month, int year, Metersoorten ms) throws IndexOutOfBoundsException{
 
+		Meterstanden first = null;
+		Meterstanden last = null;
+		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		
-		Meterstanden first = getMeterstand(session, month, year, ms, true);
-		Meterstanden last= getMeterstand(session, month, year, ms, false);
-		
-		session.close();
+		try{
+			first = getMeterstand(session, month, year, ms, true);
+			last= getMeterstand(session, month, year, ms, false);
+		} catch (IndexOutOfBoundsException e) {
+			log.error("Could not determing meterstand for this mont: " +
+					Integer.toString(month) + "-" + Integer.toString(year));
+			throw e;
+		} finally {
+			session.close();
+		}
 		
 		if(first.getDatum().equals(last.getDatum())){
 			log.debug("The dates are equal.");
 			return last.getWaarde();
 		} else {
-			long timeBetween= last.getDatum().getTime() - first.getDatum().getTime();
+			//interpolate
+			long timeBetween = last.getDatum().getTime() - first.getDatum().getTime();
 			Date maandDag = parseDatum("01-" + Integer.toString(month) + "-" + Integer.toString(year));
 			long timeToStart = maandDag.getTime() - first.getDatum().getTime();
 			log.trace("timeBetween: " + Long.toString(timeBetween) + " - timeToStart: " + Long.toString(timeToStart));
@@ -45,7 +63,7 @@ public class Month {
 		}
 	}
 	
-	public static float getNextMonth(int month, int year, Metersoorten ms){
+	public static float getNextMonth(int month, int year, Metersoorten ms) throws IndexOutOfBoundsException{
 		if (month == 12){
 			month = 0;
 			year ++;
@@ -53,13 +71,16 @@ public class Month {
 		return getMonth(month + 1, year, ms);
 	}
 
-	public static float getMonthUsage(int month, int year, Metersoorten ms){
+	public static float getMonthUsage(int month, int year, Metersoorten ms) throws IndexOutOfBoundsException{
 		float start = getMonth(month, year, ms);
 		float end = getNextMonth(month, year, ms);
 		return end - start;
 	}
 	
-	private static Meterstanden getMeterstand(Session s, int month, int year, Metersoorten ms, boolean before){
+	private static Meterstanden getMeterstand(Session s, int month, int year, 
+			Metersoorten ms, boolean before) throws IndexOutOfBoundsException{
+
+		Meterstanden result = null;
 		
 		StringBuilder hql = new StringBuilder("from Meterstanden m ");	
 		hql.append("where m.metersoort = :metersoort ");
@@ -75,8 +96,15 @@ public class Month {
 		Query query = s.createQuery(hql.toString());
 		query.setParameter("metersoort", ms);
 		query.setMaxResults(1);
-		Meterstanden result = (Meterstanden)query.getResultList().get(0);
-		//TODO: add try, catch and raise error
+
+		try {
+			result = (Meterstanden)query.getResultList().get(0);
+		} catch (IndexOutOfBoundsException e){
+			log.debug("Error for getting the meterstand for " + Integer.toString(month) +
+					"-" + Integer.toString(year) + ", for metersort: " +
+					ms.toString() + ". Perhaps it doesn't exists?");
+			throw e;
+		}
 		
 		return result;
 	}

@@ -72,5 +72,20 @@ public class TestMonth {
 		
 		assertTrue(usage>0);
 	}
+	
+	@Test
+	public void testGetMonthException(){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		
+		Metersoorten ms = session.get(Metersoorten.class, 1L);
+		try{
+			Month.getMonthUsage(1, 2000, ms);
+		} catch (IndexOutOfBoundsException testPassed){
+		} catch (Exception e){
+			fail("The wrong (or no) exception is used.");
+		} finally {
+			session.close();
+		}
+	}
 
 }
