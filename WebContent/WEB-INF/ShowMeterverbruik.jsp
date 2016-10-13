@@ -17,16 +17,20 @@
 		        <table class="table table-hover display" id="meterverbruikTable">
 		        	<caption class="caption">Lijst van verbruik.</caption>
 		        	<thead><tr>
+		        	
 		        		<th>jaar</th>
 		        		<th>maand</th>
-		        		<th>verbruik meter 1</th>
-		        		<!-- todo: loop over alle metersoorten -->
+		        		<c:forEach items="${theMetersoorten}"  var="ms">
+		        			<th><c:out value="${ms.metersoort}"/></th>
+		        		</c:forEach>
 		        	</tr></thead>
-		        	<c:forEach items="${theMeterverbruik}" var="mv">
+		        	<c:forEach items="${theMeterverbruik}" var="mlo">
 			    		<tr>
-					        <td><c:out value="${mv.year}"/></td>
-					        <td><c:out value="${mv.maand}"/></td>
-					        <td><c:out value="${ms.waarde}"/></td>
+					        <td><c:out value="${mlo.jaar}"/></td>
+					        <td><c:out value="${mlo.maand}"/></td>
+					        <c:forEach items="${mlo.mv}" var="mlomv">
+					        	<td><c:out value="${mlomv.waarde}"/></td>
+					        </c:forEach>
 			    		</tr>
 					</c:forEach>
 				</table>

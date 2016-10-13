@@ -2,6 +2,7 @@ package main.java.meterstanden.domain;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -12,11 +13,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import main.java.meterstanden.hibernate.HibernateUtil;
 import main.java.meterstanden.model.Metersoorten;
 import main.java.meterstanden.model.Meterverbruik;
+import main.java.meterstanden.util.Month;
+import main.java.meterstanden.util.MonthList;
 
 /**
  * Servlet implementation class ShowMeterverbruik
@@ -24,6 +28,7 @@ import main.java.meterstanden.model.Meterverbruik;
 @WebServlet("/ShowMeterverbruik")
 public class ShowMeterverbruik extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final Logger log = Logger.getLogger(ShowMeterverbruik.class);
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -38,19 +43,29 @@ public class ShowMeterverbruik extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		List<MonthList> ml_overview = new ArrayList<MonthList>();
 		
+		Session session = HibernateUtil.getSessionFactory().openSession();	
 		Query query = session.createQuery("from Metersoorten");
-		List<?> rl = query.getResultList();
+		List<?> metersoorten = query.getResultList();
 		session.close();
+		Iterator<?> metersoortenit = metersoorten.iterator();
 		
-		Metersoorten ms = (Metersoorten) rl.get(0);
-		//vul met dummy-waarden
-		Meterverbruik mv = new Meterverbruik(2016, 2, ms, 34.2F);
-		List<Meterverbruik> mv_list = new ArrayList<Meterverbruik>();
-		mv_list.add(mv);
+		int jaar = 2016;
+		int maand = 6;
+		List<Meterverbruik> meterverbruikLijst= new ArrayList<Meterverbruik>();
+		while (metersoortenit.hasNext()){
+			Metersoorten ms = (Metersoorten)metersoortenit.next();
+			Meterverbruik mv = new Meterverbruik(jaar, maand, ms, Month.getMonthUsage(maand, jaar, ms));
+			meterverbruikLijst.add(mv);
+		}
 		
-		request.setAttribute("theMeterverbruik", mv_list);
+		MonthList ml = new MonthList(jaar, maand, meterverbruikLijst);
+		ml_overview.add(ml);
+		log.debug(ml.toString());
+		
+		request.setAttribute("theMeterverbruik", ml_overview);
+		request.setAttribute("theMetersoorten", metersoorten);
 
 		RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/ShowMeterverbruik.jsp");
 		rd.forward(request, response);
