@@ -18,7 +18,7 @@ import org.hibernate.Session;
 
 import main.java.meterstanden.hibernate.HibernateUtil;
 import main.java.meterstanden.model.Metersoorten;
-import main.java.meterstanden.model.Meterverbruik;
+import main.java.meterstanden.model.Maandverbruik;
 import main.java.meterstanden.util.Month;
 import main.java.meterstanden.util.MonthList;
 
@@ -53,10 +53,10 @@ public class ShowMeterverbruik extends HttpServlet {
 		
 		int jaar = 2016;
 		int maand = 6;
-		List<Meterverbruik> meterverbruikLijst= new ArrayList<Meterverbruik>();
+		List<Maandverbruik> meterverbruikLijst= new ArrayList<Maandverbruik>();
 		while (metersoortenit.hasNext()){
 			Metersoorten ms = (Metersoorten)metersoortenit.next();
-			Meterverbruik mv = new Meterverbruik(jaar, maand, ms, Month.getMonthUsage(maand, jaar, ms));
+			Maandverbruik mv = new Maandverbruik(jaar, maand, ms, Month.getMonthUsage(maand, jaar, ms));
 			meterverbruikLijst.add(mv);
 		}
 		

@@ -2,18 +2,18 @@ package main.java.meterstanden.util;
 
 import java.util.List;
 
-import main.java.meterstanden.model.Meterverbruik;
+import main.java.meterstanden.model.Maandverbruik;
 
 public class MonthList {
 	private int jaar;
 	private int maand;
-	private List<Meterverbruik> mv;
+	private List<Maandverbruik> mv;
 	
 	public MonthList() {
 		super();
 	}
 	
-	public MonthList(int jaar, int maand, List<Meterverbruik> mv) {
+	public MonthList(int jaar, int maand, List<Maandverbruik> mv) {
 		super();
 		this.jaar = jaar;
 		this.maand = maand;
@@ -31,10 +31,10 @@ public class MonthList {
 	public void setMaand(int maand) {
 		this.maand = maand;
 	}
-	public List<Meterverbruik> getMv() {
+	public List<Maandverbruik> getMv() {
 		return mv;
 	}
-	public void setMv(List<Meterverbruik> mv) {
+	public void setMv(List<Maandverbruik> mv) {
 		this.mv = mv;
 	}
 
