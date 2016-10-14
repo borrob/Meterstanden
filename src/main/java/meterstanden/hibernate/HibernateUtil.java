@@ -7,6 +7,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import main.java.meterstanden.model.Maandverbruik;
 import main.java.meterstanden.model.Metersoorten;
 import main.java.meterstanden.model.Meterstanden;
 
@@ -48,6 +49,7 @@ public class HibernateUtil {
 			config.configure("/hibernate.cfg.xml");
 			config.addAnnotatedClass(Metersoorten.class);
 			config.addAnnotatedClass(Meterstanden.class);
+			config.addAnnotatedClass(Maandverbruik.class);
 			
 			sr = new StandardServiceRegistryBuilder().applySettings(
 		            config.getProperties()).build();
@@ -105,6 +107,39 @@ public class HibernateUtil {
 			log.debug("Meterstand with id = " + Long.valueOf(id) + " is deleted.");
 		} catch (Exception e) {
 			log.error("Could not delete meterstand. Got error: " + e.toString() + " for meterstand: " + Long.valueOf(id));
+			return false;
+		} finally {
+			session.close();
+		}
+		return true;
+	}
+	
+	public static boolean persistMaandverbruik(Maandverbruik mv){
+		Session session = getSessionFactory().openSession();
+		try{
+			session.beginTransaction();
+			session.save(mv);
+			session.getTransaction().commit();
+			log.info("New maandverbruik added.");
+		} catch (Exception e) {
+			log.error("Could not save maandverbruik, got error: " + e.toString());
+			return false;
+		} finally {
+			session.close();
+		}
+		return true;
+	}
+	
+	public static boolean deleteMaandverbruik(Long id){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			Maandverbruik mv = session.get(Maandverbruik.class, id);
+			session.delete("Maandverbruik", mv);
+			session.getTransaction().commit();
+			log.debug("Maandverbruik with id = " + Long.valueOf(id) + " is deleted.");
+		} catch (Exception e) {
+			log.error("Could not delete maandverbruik. Got error: " + e.toString());
 			return false;
 		} finally {
 			session.close();
