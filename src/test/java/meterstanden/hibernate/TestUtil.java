@@ -78,5 +78,7 @@ public class TestUtil {
 		
 		session.close();
 	}
+	
+	//TODO: ADD test cases for calculating the mesterstandverbruik
 
 }

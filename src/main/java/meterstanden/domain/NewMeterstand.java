@@ -21,6 +21,7 @@ import org.hibernate.Session;
 import main.java.meterstanden.hibernate.HibernateUtil;
 import main.java.meterstanden.model.Metersoorten;
 import main.java.meterstanden.model.Meterstanden;
+import main.java.meterstanden.util.UpdateVerbruik;
 
 /**
  * Servlet implementation class NewMeterstand
@@ -51,13 +52,14 @@ public class NewMeterstand extends HttpServlet {
 	 * Add new meterstand to the database
 	 * 
 	 * Checks if the POST-request has the required parameters and that they are valid. Creates a new meterstanden object
-	 * and persists it into the database. Notifies the user. Redirects to the referring page.
+	 * and persists it into the database and then calculates the usage of the meter from the previous month
+	 * to the next month. Notifies the user. Redirects to the referring page.
 	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String message;
+		String message = null;
 		
 		if (checkParameterExistance(request)){	
 			
@@ -65,13 +67,19 @@ public class NewMeterstand extends HttpServlet {
 			Metersoorten meter = parseMetersoort(request.getParameter("deMeter"));
 			String opmerking = request.getParameter("deOpmerking");
 			float waarde = Float.parseFloat(request.getParameter("deStand"));
-		
+			
 			if(checkParameters(datum, meter, opmerking, waarde)){
 			
 				Meterstanden newMeterstand = new Meterstanden(datum, waarde, opmerking, meter);
 				
 				if (HibernateUtil.persistMeterstand(newMeterstand)){
-					message = "De nieuwe meterstand is toegevoegd.<br/>";
+					try {
+						UpdateVerbruik.updateMeterverbruik(newMeterstand);
+						message += "Het maandverbruik is bijgewerkt.<br/>";
+					} catch (IndexOutOfBoundsException ignoreException) {
+						log.error("Could not determine meterstandverbruik.");
+					}
+					message += "De nieuwe meterstand is toegevoegd.<br/>";
 				} else {
 					//error with persisingMeterstand
 					log.error("Could not save meterstand: " + newMeterstand.toString());

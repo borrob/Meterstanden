@@ -115,12 +115,13 @@ public class HibernateUtil {
 	}
 	
 	public static boolean persistMaandverbruik(Maandverbruik mv){
+		//TODO: javadoc
 		Session session = getSessionFactory().openSession();
 		try{
 			session.beginTransaction();
 			session.save(mv);
 			session.getTransaction().commit();
-			log.info("New maandverbruik added.");
+			log.info("New maandverbruik added: " + mv.toString());
 		} catch (Exception e) {
 			log.error("Could not save maandverbruik, got error: " + e.toString());
 			return false;
@@ -131,6 +132,7 @@ public class HibernateUtil {
 	}
 	
 	public static boolean deleteMaandverbruik(Long id){
+		//TODO: javadoc
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();

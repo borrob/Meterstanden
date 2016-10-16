@@ -37,8 +37,9 @@ public class Month {
 			first = getMeterstand(session, month, year, ms, true);
 			last= getMeterstand(session, month, year, ms, false);
 		} catch (IndexOutOfBoundsException e) {
-			log.error("Could not determing meterstand for this mont: " +
-					Integer.toString(month) + "-" + Integer.toString(year));
+			log.error("Could not determine meterstand for this month: " +
+					Integer.toString(month) + "-" + Integer.toString(year) +
+					" and metersoort: " + ms.getMetersoort());
 			throw e;
 		} finally {
 			session.close();
@@ -112,7 +113,7 @@ public class Month {
 	 * @return the reading of the meterstand
 	 * @throws IndexOutOfBoundsException If there was an error getting the meterstand
 	 */
-	private static Meterstanden getMeterstand(Session s, int month, int year, 
+	public static Meterstanden getMeterstand(Session s, int month, int year, 
 			Metersoorten ms, boolean before) throws IndexOutOfBoundsException{
 
 		Meterstanden result = null;
@@ -138,7 +139,7 @@ public class Month {
 			result = (Meterstanden)query.getResultList().get(0);
 		} catch (IndexOutOfBoundsException e){
 			log.debug("Error for getting the meterstand for " + Integer.toString(month) +
-					"-" + Integer.toString(year) + ", for metersort: " +
+					"-" + Integer.toString(year) + ", for metersoort: " +
 					ms.toString() + ". Perhaps it doesn't exists?");
 			throw e;
 		}
