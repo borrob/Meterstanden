@@ -48,8 +48,9 @@ public class ShowMeterverbruik extends HttpServlet {
 		StringBuilder hql = new StringBuilder();
 		hql.append("select distinct mv.maand, mv.jaar");
 		hql.append(" from Maandverbruik mv");
-		hql.append(" order by mv.jaar asc, mv.maand asc");
+		hql.append(" order by mv.jaar desc, mv.maand desc");
 		Query qMaandverbruiken = session.createQuery(hql.toString());
+		qMaandverbruiken.setMaxResults(20);
 		List<?> maandverbruikenList = qMaandverbruiken.getResultList();
 		Iterator<?> maandverbruikenIt = maandverbruikenList.iterator();
 		
