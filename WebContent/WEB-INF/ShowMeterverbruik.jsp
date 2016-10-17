@@ -12,7 +12,7 @@
     	
     	<div class="row">
 	    	<div class="col-xs-12">
-		        <p>Dit zijn de 20 laatste meterstanden.</p>
+		        <p>Dit is het verbruik.</p>
 		      
 		        <table class="table table-hover display" id="meterverbruikTable">
 		        	<caption class="caption">Lijst van verbruik.</caption>
@@ -29,7 +29,7 @@
 					        <td><c:out value="${mlo.jaar}"/></td>
 					        <td><c:out value="${mlo.maand}"/></td>
 					        <c:forEach items="${mlo.mv}" var="mlomv">
-					        	<td><c:out value="${mlomv.waarde}"/></td>
+					        	<td><c:out value="${mlomv.verbruik}"/></td>
 					        </c:forEach>
 			    		</tr>
 					</c:forEach>

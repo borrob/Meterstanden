@@ -168,8 +168,10 @@ public class UpdateVerbruik {
 		hql.append(" where m.metersoort = :myMeter");
 		if (prev){
 			hql.append(" and m.datum < :myDatum");
+			hql.append(" order by m.datum desc");
 		} else {
 			hql.append(" and m.datum > :myDatum");
+			hql.append(" order by m.datum asc");
 		}
 		Query q = session.createQuery(hql.toString());
 		q.setParameter("myMeter", ms.getMetersoort());
