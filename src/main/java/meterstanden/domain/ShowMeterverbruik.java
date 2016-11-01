@@ -22,7 +22,7 @@ import main.java.meterstanden.util.MonthList;
  * Servlet implementation class ShowMeterverbruik
  */
 @WebServlet("/ShowMeterverbruik")
-public class ShowMeterverbruik extends HttpServlet {
+public class ShowMeterverbruik extends HttpServlet { // NO_UCD (unused code)
 	private static final long serialVersionUID = 1L;
        
     /**

@@ -21,7 +21,7 @@ import main.java.meterstanden.model.Metersoorten;
  * Servlet implementation class ShowMeterstanden
  */
 @WebServlet("/ShowMetersoorten")
-public class ShowMetersoorten extends HttpServlet {
+public class ShowMetersoorten extends HttpServlet { // NO_UCD (unused code)
 	private static final long serialVersionUID = 1L;
 	private static Logger log = Logger.getLogger(ShowMetersoorten.class);
        

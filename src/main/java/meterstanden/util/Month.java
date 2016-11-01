@@ -113,7 +113,7 @@ public class Month {
 	 * @return the reading of the meterstand
 	 * @throws IndexOutOfBoundsException If there was an error getting the meterstand
 	 */
-	public static Meterstanden getMeterstand(Session s, int month, int year, 
+	public static Meterstanden getMeterstand(Session s, int month, int year,  // NO_UCD (use private)
 			Metersoorten ms, boolean before) throws IndexOutOfBoundsException{
 
 		Meterstanden result = null;

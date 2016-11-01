@@ -65,7 +65,7 @@ public class HibernateUtil {
 	/**
 	 * Shutdown the sessionfactory.
 	 */
-	public static void shutdown(){
+	public static void shutdown(){ // NO_UCD (use default)
 		getSessionFactory().close();
 	}
 

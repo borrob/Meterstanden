@@ -27,7 +27,7 @@ import main.java.meterstanden.util.UpdateVerbruik;
  * Servlet implementation class NewMeterstand
  */
 @WebServlet("/newMeterstand")
-public class NewMeterstand extends HttpServlet {
+public class NewMeterstand extends HttpServlet { // NO_UCD (unused code)
 	private static final long serialVersionUID = 1L;
 	private static Logger log = Logger.getLogger(NewMeterstand.class);
        
