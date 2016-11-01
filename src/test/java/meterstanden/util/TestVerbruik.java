@@ -19,6 +19,9 @@ import main.java.meterstanden.util.UpdateVerbruik;
 
 public class TestVerbruik {
 
+	/**
+	 * Test the calculation of usage.
+	 */
 	@Test
 	public void testUsage() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -60,6 +63,9 @@ public class TestVerbruik {
 
 	}
 	
+	/**
+	 * Test the calculation of usage over a longer period.
+	 */
 	@Test
 	public void testUsageLonger() {
 		Session session = HibernateUtil.getSessionFactory().openSession();

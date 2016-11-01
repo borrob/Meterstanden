@@ -17,6 +17,9 @@ public class TestMonth {
 	
 	private static Logger log = Logger.getLogger(TestMonth.class);
 
+	/**
+	 * Test the calculated Meterstand.
+	 */
 	@Test
 	public void testMonth() {
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -46,6 +49,9 @@ public class TestMonth {
 		assertTrue(calculatedMeterstand <= highest.getWaarde());
 	}
 	
+	/**
+	 * Test the calculated Meterstand.
+	 */
 	@Test
 	public void testNextMonth(){
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -59,6 +65,9 @@ public class TestMonth {
 		assertTrue(calculatedMeterstand == calculatedMeterstand2);
 	}
 	
+	/**
+	 * Test that usage > 0
+	 */
 	@Test
 	public void testUsage(){
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -73,6 +82,9 @@ public class TestMonth {
 		assertTrue(usage>0);
 	}
 	
+	/**
+	 * Test the thrown exception.
+	 */
 	@Test
 	public void testGetMonthException(){
 		Session session = HibernateUtil.getSessionFactory().openSession();

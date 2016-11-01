@@ -19,6 +19,15 @@ public class UpdateVerbruik {
 	
 	private static Logger log = Logger.getLogger(UpdateVerbruik.class);
 	
+	/**
+	 * Update the Maandverbruik based on this meterstand.
+	 * 
+	 * The maandverbruik is calculated with the current Meterstand and the meterstanden
+	 * before and after this one.
+	 * 
+	 * @param ms the Meterstand on which the update is based.
+	 * @throws IndexOutOfBoundsException When no previous or next Meterstand can be found.
+	 */
 	public static void updateMeterverbruik(Meterstanden ms) throws IndexOutOfBoundsException {
 		log.trace("Going to update the maandverbruik based on meterstand: " + ms.toString());
 		int[] my = parseMonthYear(ms);
@@ -65,6 +74,12 @@ public class UpdateVerbruik {
 		}
 	}
 	
+	/**
+	 * Get the year and mont from the meterstand.
+	 * 
+	 * @param ms the Meterstand from which the year and month are to be extracted.
+	 * @return int[] where the first member is the month (JAN=1) and the second member the year.
+	 */
 	private static int[] parseMonthYear(Meterstanden ms){
 		Calendar msCal = Calendar.getInstance();
 		msCal.setTime(ms.getDatum());
@@ -78,6 +93,12 @@ public class UpdateVerbruik {
 		return result;
 	}
 	
+	/**
+	 * Update all Maandverbruiken
+	 * 
+	 * @param fl The first and last meterstand to use for the update.
+	 * @param ms The current meterstand.
+	 */
 	private static void loopUpdate(Meterstanden[] fl, Meterstanden ms){
 		int[] firstDate = parseMonthYear(fl[0]);
 		int[] lastDate = parseMonthYear(fl[1]);
@@ -93,7 +114,6 @@ public class UpdateVerbruik {
 					log.debug("Verbruik van " + Integer.toString(j) + "-" + Integer.toString(m) + ": " + Float.toString(verbruik));
 					Maandverbruik mv = new Maandverbruik(j, m, ms.getMetersoort(), verbruik);
 					HibernateUtil.persistMaandverbruik(mv);
-					log.info("New maandverbruik; " + mv.toString());
 				} catch (IndexOutOfBoundsException e){
 					log.debug("Maandverbruik for " + Integer.toString(j) + "-" + Integer.toString(m) +
 							" could not be calculated.");
@@ -105,6 +125,13 @@ public class UpdateVerbruik {
 		}
 	}
 	
+	/**
+	 * Delete the maandverbruik.
+	 * 
+	 * @param m the month of the maandverbruik to be deleted.
+	 * @param j the year of the maandverbruik to be deleted.
+	 * @param ms the metersoort of the maandverbruik to be delete.
+	 */
 	private static void deleteMeterverbruik(int m, int j, Metersoorten ms){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Query q = session.createQuery("from Maandverbruik M where M.metersoort = :myMetersoort and M.maand = :myMaand and M.jaar = :myJaar");
@@ -121,10 +148,18 @@ public class UpdateVerbruik {
 		}
 	}
 	
+	/**
+	 * Delete the meterverbruik, including before or after the current meterstand.
+	 * 
+	 * @param ms The current meterstand on which the Maandverbruik is based on.
+	 * @param monthYear int[] month and year to start deleting Maandverbruiken.
+	 * @param before Delete until (true) or after the monthYear.
+	 */
 	private static void deleteMeterverbruiken(Meterstanden ms, int[] monthYear, boolean before){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 		
+		//delete same year, but the rest of the months
 		StringBuilder hql = new StringBuilder(128);
 		hql.append("delete from Maandverbruik");
 		if (before){
@@ -140,6 +175,7 @@ public class UpdateVerbruik {
 		q.setParameter("myMeter", ms.getMetersoort());
 		int numberDeleted = q.executeUpdate();
 		
+		//delete other years
 		StringBuilder hql2 = new StringBuilder(128);
 		hql2.append("delete from Maandverbruik");
 		if (before){
@@ -159,6 +195,13 @@ public class UpdateVerbruik {
 		log.info("Deleted " + Integer.toString(numberDeleted + numberDeleted2) + " records of maandverbruik.");	
 	}
 	
+	/**
+	 * Get the previous or next meterstand before/after the current one.
+	 * 
+	 * @param ms The current meterstand
+	 * @param prev True: get the meterstand before this one, fals: get the meterstand of this one.
+	 * @return the Meterstand before/after the current one.
+	 */
 	private static Meterstanden getPreviousOrNextMeterstand(Meterstanden ms, boolean prev){
 		Meterstanden result;
 		

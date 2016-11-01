@@ -114,6 +114,12 @@ public class HibernateUtil {
 		return true;
 	}
 	
+	/**
+	 * Persist an object of Maandverbruik
+	 * 
+	 * @param mv the Maandverbruik to save in the database
+	 * @return true if succes, false if failure
+	 */
 	public static boolean persistMaandverbruik(Maandverbruik mv){
 		//TODO: javadoc
 		Session session = getSessionFactory().openSession();
@@ -131,6 +137,12 @@ public class HibernateUtil {
 		return true;
 	}
 	
+	/**
+	 * Delete the Maandverbruik with id from the database
+	 *  
+	 * @param id the id to delete
+	 * @return true if succes, false if failure
+	 */
 	public static boolean deleteMaandverbruik(Long id){
 		//TODO: javadoc
 		Session session = HibernateUtil.getSessionFactory().openSession();

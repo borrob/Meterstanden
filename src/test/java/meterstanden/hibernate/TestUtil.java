@@ -17,6 +17,9 @@ import main.java.meterstanden.model.Meterstanden;
 
 public class TestUtil {
 	
+	/**
+	 * Test to access Metersoorten.
+	 */
 	@Test
 	public void TestMetersoorten(){
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -32,6 +35,9 @@ public class TestUtil {
 		}
 	}
 	
+	/**
+	 * Test to access Meterstanden.
+	 */
 	@Test
 	public void TestMeterstanden(){
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -47,6 +53,9 @@ public class TestUtil {
 		}
 	}
 	
+	/**
+	 * Test to add and delete a meterstand.
+	 */
 	@Test
 	public void TestAddAndDeleteMeterstanden(){
 		
