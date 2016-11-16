@@ -23,7 +23,7 @@
     	var myData = {
     	        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     	        datasets: [{
-    	        	label: <c:out value="${legend}"/>,
+    	        	label: "<c:out value="${legend}"/>",
     	        	data: <c:out value="${monthoverview}"/>,
     	            borderWidth: 1,
     	            pointRadius: 5,
