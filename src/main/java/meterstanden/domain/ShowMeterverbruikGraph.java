@@ -59,7 +59,7 @@ public class ShowMeterverbruikGraph extends HttpServlet { // NO_UCD (unused code
 		
 		while(maandverbruikenIt.hasNext()){
 			Maandverbruik mv = (Maandverbruik) maandverbruikenIt.next();
-			monthUsages[mv.getMaand()] = mv.getVerbruik();
+			monthUsages[mv.getMaand()-1] = mv.getVerbruik(); //-1 is needed to fix zero -vs one-based.
 		}
 		
 		StringBuilder monthOverviewStringBuilder = new StringBuilder();
