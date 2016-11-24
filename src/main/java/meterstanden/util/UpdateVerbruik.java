@@ -231,4 +231,52 @@ public class UpdateVerbruik {
 		
 		return result;
 	}
+
+	/**
+	 * update all verbruiken voor this metersoort
+	 * 
+	 * @param ms the metersoort to update all verbruiken
+	 */
+	public static void updateAllMS(Metersoorten ms) {
+		log.debug("Going to update all verbruiken for metersoort: " + ms.toString());
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		
+		StringBuilder hql = new StringBuilder();
+		hql.append("from Meterstanden m");
+		hql.append(" where m.metersoort = :myMs");
+		Query q = session.createQuery(hql.toString());
+		q.setParameter("myMs", ms);
+		List<?> qResultlist = q.getResultList();
+		
+		session.close();
+		
+		Iterator<?> qIterator = qResultlist.iterator();
+		while (qIterator.hasNext()){
+			Meterstanden myMeterstand = (Meterstanden)qIterator.next();
+			try {
+				updateMeterverbruik(myMeterstand);
+			} catch (IndexOutOfBoundsException ignore){
+				//pass
+			}
+		}
+	}
+	
+	/**
+	 * Update all verbruiken for all meterstanden.
+	 */
+	public static void updateAll(){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		
+		StringBuilder hql = new StringBuilder();
+		hql.append("from Metersoorten m");
+		Query q = session.createQuery(hql.toString());
+		List<?> qResultList = q.getResultList();
+		session.close();
+		
+		Iterator<?> qResultListIterator = qResultList.iterator();
+		while (qResultListIterator.hasNext()){
+			Metersoorten ms = (Metersoorten)qResultListIterator.next();
+			updateAllMS(ms);
+		}
+	}
 }
