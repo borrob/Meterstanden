@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import main.java.meterstanden.hibernate.HibernateUtil;
@@ -24,6 +25,7 @@ import main.java.meterstanden.model.Metersoorten;
 @WebServlet("/ShowMeterverbruikgraph")
 public class ShowMeterverbruikGraph extends HttpServlet { // NO_UCD (unused code)
 	private static final long serialVersionUID = 1L;
+	private static Logger log = Logger.getLogger(ShowMeterverbruikGraph.class);
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -38,15 +40,25 @@ public class ShowMeterverbruikGraph extends HttpServlet { // NO_UCD (unused code
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Long ms = 2L;
-		int jaar = 2016;
+		Long ms = null;
+		int jaar = 0;
+		RequestDispatcher rd = null;
+		
+		if (request.getParameterMap().containsKey("ms") && 
+				request.getParameterMap().containsKey("jaar")){
+			ms = Long.valueOf(request.getParameter("ms"));
+			jaar = Integer.valueOf(request.getParameter("jaar"));
+		} else {
+			log.error("Missing input paramters");
+			rd = getServletContext().getRequestDispatcher("/index.html");
+		}
 		
 		String monthOverview = getMonthoverview(ms, jaar);
 
 		request.setAttribute("monthoverview", monthOverview);
-		request.setAttribute("legend", "2016 - water");
+		request.setAttribute("legend", getLegend(jaar, ms));
 
-		RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/ShowMeterverbruikGraph.jsp");
+		rd = getServletContext().getRequestDispatcher("/WEB-INF/ShowMeterverbruikGraph.jsp");
 		rd.forward(request, response);
 	}
 
@@ -58,6 +70,13 @@ public class ShowMeterverbruikGraph extends HttpServlet { // NO_UCD (unused code
 		doGet(request, response);
 	}
 	
+	/**
+	 * Get the overview per month of a specific year for a specific metersoort
+	 * 
+	 * @param msId the ID of the metersoort for this overview
+	 * @param jaar the jaar of the overview
+	 * @return a string with the overview
+	 */
 	private String getMonthoverview(Long msId, int jaar){
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -81,6 +100,12 @@ public class ShowMeterverbruikGraph extends HttpServlet { // NO_UCD (unused code
 		return out;
 	}
 	
+	/**
+	 * Parse the month usage to an array
+	 * 
+	 * @param it the iterator over the maandverbruikenlist
+	 * @return the string-array with the maandverbruiken
+	 */
 	private String parseMonthoverview(Iterator<?> it){
 		
 		Float[] monthUsages = new Float[12];
@@ -101,6 +126,25 @@ public class ShowMeterverbruikGraph extends HttpServlet { // NO_UCD (unused code
 			}
 		}
 		return monthOverviewStringBuilder.toString();
+	}
+	
+	/**
+	 * Make a legend for this year and metersoort
+	 * 
+	 * @param jaar The year for this legend
+	 * @param ms The long ID of the meterstand for this legend
+	 * @return a string with the content of the legend
+	 */
+	private static String getLegend(int jaar, Long ms){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Metersoorten myMetersoort = session.get(Metersoorten.class, ms);
+		
+		StringBuilder output = new StringBuilder();
+		output.append(Integer.toString(jaar));
+		output.append(" - ");
+		output.append(myMetersoort.getMetersoort());
+		
+		return output.toString();
 	}
 
 }
