@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <t:genericpage>
     <jsp:attribute name="header">
@@ -29,7 +30,7 @@
 					        <td><c:out value="${mlo.jaar}"/></td>
 					        <td><c:out value="${mlo.maand}"/></td>
 					        <c:forEach items="${mlo.mv}" var="mlomv">
-					        	<td><c:out value="${mlomv.verbruik}"/></td>
+					        	<td><fmt:formatNumber value="${mlomv.verbruik}" type="number" maxFractionDigits="0"/> <c:out value="${mlomv.metersoort.unit}"/></td>
 					        </c:forEach>
 			    		</tr>
 					</c:forEach>

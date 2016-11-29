@@ -17,11 +17,13 @@
 		        	<thead><tr>
 		        		<th>id</th>
 		        		<th>soort</th>
+		        		<th>unit</th>
 		        	</tr></thead>
 		        	<c:forEach items="${theMetersoorten}" var="ms">
 			    		<tr>
 					        <td><c:out value="${ms.id}"/></td>
-					        <td><c:out value="${ms.metersoort}"/></td>  
+					        <td><c:out value="${ms.metersoort}"/></td>
+					        <td><c:out value="${ms.unit}"/></td>  
 			    		</tr>
 					</c:forEach>
 				</table>

@@ -26,6 +26,11 @@ public class Metersoorten {
 	 * Descriptive text of the meter.
 	 */
 	private String metersoort;
+	
+	/**
+	 * The unit of this meter.
+	 */
+	private String unit;
 
 	//-----------// GETTER AND SETTERS //-----------//
 	
@@ -44,14 +49,22 @@ public class Metersoorten {
 	public void setMetersoort(String metersoort) {
 		this.metersoort = metersoort;
 	}
-
-	/* METHODS */
 	
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+	
+	/* METHODS */
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "Metersoorten [id=" + id + ", metersoort=" + metersoort + "]";
+		return "Metersoorten [id=" + id + ", metersoort=" + metersoort + ", unit=" + unit + "]";
 	}
 }

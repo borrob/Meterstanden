@@ -43,7 +43,7 @@
 <%-- 					        <td><c:out value="${ms.id}"/></td> --%>
 					        <td><c:out value="${ms.datum}"/></td>
 					        <td><c:out value="${ms.metersoort.metersoort}"/></td>
-					        <td><c:out value="${ms.waarde}"/></td>
+					        <td><c:out value="${ms.waarde}"/> <c:out value="${ms.metersoort.unit}"/></td>
 					        <td><c:out value="${ms.omschrijving}"/></td>
 					        <td><span class="glyphicon glyphicon-remove removeMeterstandButton" aria-hidden="true" id ="removeMeterstandButtonID_${ms.id}"></span></td>  
 			    		</tr>

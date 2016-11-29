@@ -53,10 +53,16 @@ public class ShowMeterverbruikGraph extends HttpServlet { // NO_UCD (unused code
 			rd = getServletContext().getRequestDispatcher("/index.html");
 		}
 		
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Metersoorten myMetersoort = session.get(Metersoorten.class, ms);
+		session.close();
+		
 		String monthOverview = getMonthoverview(ms, jaar);
+		//TODO: switch ms to myMetersoort
 
 		request.setAttribute("monthoverview", monthOverview);
 		request.setAttribute("legend", getLegend(jaar, ms));
+		request.setAttribute("ylabel", myMetersoort.getUnit() + " / month");
 
 		rd = getServletContext().getRequestDispatcher("/WEB-INF/ShowMeterverbruikGraph.jsp");
 		rd.forward(request, response);
@@ -81,7 +87,7 @@ public class ShowMeterverbruikGraph extends HttpServlet { // NO_UCD (unused code
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		
-		Metersoorten ms = session.get(Metersoorten.class, msId); //keeping it simple for now
+		Metersoorten ms = session.get(Metersoorten.class, msId);
 		
 		StringBuilder hql = new StringBuilder();
 		hql.append("from Maandverbruik mv");
