@@ -27,8 +27,29 @@
     	        	data: <c:out value="${monthoverview}"/>,
     	            borderWidth: 1,
     	            pointRadius: 5,
-    	            pointBackgroundColor: 'black'
-    	        }]
+    	            pointBackgroundColor: 'rgb(10,10,10)',
+    	            backgroundColor: 'rgba(10,10,10,0.2)'
+    	        }
+    	        <c:if test="${monthoverview2 ne null}">
+    	        ,{
+    	        	label: '<c:out value="${legend2}"/>',
+    	        	data: <c:out value="${monthoverview2}"/>,
+    	            borderWidth: 1,
+    	            pointRadius: 5,
+    	            pointBackgroundColor: 'rgb(0,0,200)',
+    	            backgroundColor: 'rgba(0,0,200,0.2)'
+    	        }
+    	        </c:if>
+    	        <c:if test="${monthoverview3 ne null}">
+    	        ,{
+    	        	label: '<c:out value="${legend3}"/>',
+    	        	data: <c:out value="${monthoverview3}"/>,
+    	            borderWidth: 1,
+    	            pointRadius: 5,
+    	            pointBackgroundColor: 'rgb(0,200,0)',
+    	            backgroundColor: 'rgba(0,200,0,0.2)'
+    	        }</c:if>
+    	        ]
     	    };
     	var myOptions = {
     	        scales: {
