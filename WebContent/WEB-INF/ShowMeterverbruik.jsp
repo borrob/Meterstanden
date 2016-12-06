@@ -10,6 +10,8 @@
     <jsp:attribute name="footer">
     </jsp:attribute>
     <jsp:body>
+    
+    	<jsp:include page="/WEB-INF/modalwindow/showGraph.jsp"/>
     	
     	<div class="row">
 	    	<div class="col-xs-12">
