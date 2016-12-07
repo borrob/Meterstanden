@@ -39,6 +39,7 @@ public class ShowMeterverbruik extends HttpServlet { // NO_UCD (unused code)
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		List<MonthList> ml_overviewList = new ArrayList<MonthList>();
+		List<Integer> yearList = new ArrayList<Integer>();
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();	
 		
@@ -54,6 +55,15 @@ public class ShowMeterverbruik extends HttpServlet { // NO_UCD (unused code)
 		List<?> maandverbruikenList = qMaandverbruiken.getResultList();
 		Iterator<?> maandverbruikenIt = maandverbruikenList.iterator();
 		
+		StringBuilder hqlYear = new StringBuilder();
+		hqlYear.append("select distinct mv.jaar");
+		hqlYear.append(" from Maandverbruik mv");
+		hqlYear.append(" order by mv.jaar desc");
+		Query qYears = session.createQuery(hqlYear.toString());
+		qYears.setMaxResults(20);
+		List<?> yearsList = qYears.getResultList();
+		Iterator<?> yearsListIterator = yearsList.iterator();
+		
 		session.close();
 		
 		while (maandverbruikenIt.hasNext()){
@@ -62,8 +72,14 @@ public class ShowMeterverbruik extends HttpServlet { // NO_UCD (unused code)
 			ml_overviewList.add(ml_overview);
 		}
 		
+		while (yearsListIterator.hasNext()){
+			int theYear = (Integer) yearsListIterator.next();
+			yearList.add(theYear);
+		}
+		
 		request.setAttribute("theMeterverbruik", ml_overviewList);
 		request.setAttribute("theMetersoorten", metersoorten);
+		request.setAttribute("theYears", yearList);
 
 		RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/ShowMeterverbruik.jsp");
 		rd.forward(request, response);

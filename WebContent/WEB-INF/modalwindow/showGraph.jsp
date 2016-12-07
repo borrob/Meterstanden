@@ -25,26 +25,29 @@
         		<label for="jaar1" class="col-sm-2 control-label">Jaar1</label>
         		<div class="col-sm-10">
 	        		<select name="jaar" id="jaar1">
-	        		<!-- TODO: dynamic list -->
-							<option value="2016">2016</option>
+	        			<c:forEach items="${theYears}" var = "year">
+							<option value="${year}">${year}</option>
+						</c:forEach>
 	        		</select>
         		</div>
         	</div>
-        	        	<div class="form-group">
+			<div class="form-group">
         		<label for="jaar2" class="col-sm-2 control-label">Jaar2</label>
-        		<!-- TODO: dynamic list -->
         		<div class="col-sm-10">
 	        		<select name="jaar2" id="jaar2">
-							<option value="2016">2016</option>
+						<c:forEach items="${theYears}" var = "year">
+							<option value="${year}">${year}</option>
+						</c:forEach>
 	        		</select>
         		</div>
         	</div>
-        	        	<div class="form-group">
+        	<div class="form-group">
         		<label for="jaar3" class="col-sm-2 control-label">Jaar3</label>
-        		<!-- TODO: dynamic list -->
         		<div class="col-sm-10">
 	        		<select name="jaar3" id="jaar3">
-							<option value="2016">2016</option>
+						<c:forEach items="${theYears}" var = "year">
+							<option value="${year}">${year}</option>
+						</c:forEach>
 	        		</select>
         		</div>
         	</div>
