@@ -10,10 +10,13 @@
     <jsp:attribute name="footer">
     </jsp:attribute>
     <jsp:body>
+    
+    	<jsp:include page="/WEB-INF/modalwindow/showGraph.jsp"/>
     	
     	<div class="row">
 	    	<div class="col-xs-12">
 		        <p>Dit is het verbruik.</p>
+		        <button onclick="$('#showGraphModal').modal()" class="btn btn-info">Show in graph</button>
 		      
 		        <table class="table table-hover display" id="meterverbruikTable">
 		        	<caption class="caption">Lijst van verbruik.</caption>
