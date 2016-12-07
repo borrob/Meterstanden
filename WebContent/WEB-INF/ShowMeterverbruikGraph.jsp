@@ -6,10 +6,13 @@
     <jsp:attribute name="header">
 		<script src="lib/chart/Chart.min.js"></script>
 		<h1>Meterstanden verbruik</h1>
+		<button onclick="$('#showGraphModal').modal()" class="btn btn-info">Change graph</button>
     </jsp:attribute>
     <jsp:attribute name="footer">
     </jsp:attribute>
     <jsp:body>
+    
+    	<jsp:include page="/WEB-INF/modalwindow/showGraph.jsp"/>
     	
     	<div class="row">
 	    	<div class="col-xs-12">

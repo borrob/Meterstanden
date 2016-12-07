@@ -1,6 +1,7 @@
 package main.java.meterstanden.domain;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import org.hibernate.Session;
 import main.java.meterstanden.hibernate.HibernateUtil;
 import main.java.meterstanden.model.Maandverbruik;
 import main.java.meterstanden.model.Metersoorten;
+import main.java.meterstanden.util.MonthList;
 
 /**
  * Servlet implementation class ShowMeterverbruik
@@ -39,7 +41,7 @@ public class ShowMeterverbruikGraph extends HttpServlet { // NO_UCD (unused code
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		//TODO: refactor and granulate
 		Long ms = null;
 		int jaar = 0;
 		int jaar2 = 0;
@@ -70,7 +72,6 @@ public class ShowMeterverbruikGraph extends HttpServlet { // NO_UCD (unused code
 		//find the metersoort
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Metersoorten myMetersoort = session.get(Metersoorten.class, ms);
-		session.close();
 		
 		//set the first month
 		String monthOverview = getMonthoverview(ms, jaar);
@@ -91,6 +92,48 @@ public class ShowMeterverbruikGraph extends HttpServlet { // NO_UCD (unused code
 			request.setAttribute("legend3", getLegend(jaar3, ms));
 		}
 		//TODO: switch ms to myMetersoort
+		
+		List<MonthList> ml_overviewList = new ArrayList<MonthList>();
+		List<Integer> yearList = new ArrayList<Integer>();	
+		
+		Query query = session.createQuery("from Metersoorten");
+		List<?> metersoorten = query.getResultList();
+		
+		StringBuilder hql = new StringBuilder();
+		hql.append("select distinct mv.maand, mv.jaar");
+		hql.append(" from Maandverbruik mv");
+		hql.append(" order by mv.jaar desc, mv.maand desc");
+		Query qMaandverbruiken = session.createQuery(hql.toString());
+		qMaandverbruiken.setMaxResults(20);
+		List<?> maandverbruikenList = qMaandverbruiken.getResultList();
+		Iterator<?> maandverbruikenIt = maandverbruikenList.iterator();
+		
+		StringBuilder hqlYear = new StringBuilder();
+		hqlYear.append("select distinct mv.jaar");
+		hqlYear.append(" from Maandverbruik mv");
+		hqlYear.append(" order by mv.jaar desc");
+		Query qYears = session.createQuery(hqlYear.toString());
+		qYears.setMaxResults(20);
+		List<?> yearsList = qYears.getResultList();
+		Iterator<?> yearsListIterator = yearsList.iterator();
+		
+		session.close();
+		
+		while (maandverbruikenIt.hasNext()){
+			Object[] mj = (Object[]) maandverbruikenIt.next();
+			MonthList ml_overview = MonthList.fillMonth((int)mj[1], (int)mj[0]);
+			ml_overviewList.add(ml_overview);
+		}
+		
+		while (yearsListIterator.hasNext()){
+			int theYear = (Integer) yearsListIterator.next();
+			yearList.add(theYear);
+		}
+		
+		request.setAttribute("theMeterverbruik", ml_overviewList);
+		request.setAttribute("theMetersoorten", metersoorten);
+		request.setAttribute("theYears", yearList);
+
 
 		//forward to JSP
 		rd = getServletContext().getRequestDispatcher("/WEB-INF/ShowMeterverbruikGraph.jsp");
