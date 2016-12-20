@@ -1,0 +1,1 @@
+{"version":3,"file":"maandverbruik.component.js","sourceRoot":"","sources":["../app/maandverbruik.component.ts"],"names":[],"mappings":";;;;;;;;;;AAAA,sCAAwC;AAQxC,IAAa,sBAAsB;IAAnC;IAAoC,CAAC;IAAD,6BAAC;AAAD,CAAC,AAArC,IAAqC;AAAxB,sBAAsB;IANlC,gBAAS,CAAC;QACV,QAAQ,EAAE,MAAM,CAAC,EAAE;QACnB,QAAQ,EAAE,kBAAkB;QAC5B,QAAQ,EAAE,wBAAwB;KAClC,CAAC;;GAEW,sBAAsB,CAAE;AAAxB,wDAAsB"}

@@ -1,0 +1,38 @@
+{
+  "name": "meterstanden",
+  "version": "0.1.0",
+  "description": "A nice way to keep track of meterstanden.",
+  "scripts": {
+    "start": "tsc && concurrently \"tsc -w\" \"lite-server\" ",
+    "lite": "lite-server",
+    "clean": "rm -r dist ; mkdir dist",
+    "cleanbuild": "npm run clean && tsc",
+    "build": "npm run cleanbuild && browserify -d -s main dist/main.js > dist/bundle.js",
+    "build_prod": "npm run build && npm run minify",
+    "minify": "uglifyjs dist/bundle.js --screw-ie8 --compress --mangle --output dist/bundle.min.js"
+  },
+  "keywords": [],
+  "author": "borrob",
+  "license": "-check-",
+  "dependencies": {
+    "@angular/common": "~2.3.0",
+    "@angular/compiler": "~2.3.0",
+    "@angular/core": "~2.3.0",
+    "@angular/forms": "~2.3.0",
+    "@angular/http": "~2.3.0",
+    "@angular/platform-browser": "~2.3.0",
+    "@angular/platform-browser-dynamic": "~2.3.0",
+    "@angular/router": "~3.3.0",
+    "@angular/upgrade": "~2.3.0",
+    "@types/core-js": "^0.9.35",
+    "core-js": "^2.4.1",
+    "reflect-metadata": "^0.1.8",
+    "rxjs": "5.0.0-rc.4",
+    "zone.js": "^0.7.4"
+  },
+  "devDependencies": {
+    "@types/node": "^6.0.52",
+    "concurrently": "^3.0.0",
+    "lite-server": "^2.2.2"
+  }
+}
