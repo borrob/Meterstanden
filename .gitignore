@@ -30,3 +30,6 @@ Scripts/myMeterstanden.sql
 # npm
 node_modules
 src/main/javascript/dist/*.js
+src/main/javascript/*/*.js.map
+src/main/javascript/*/*.ts.map
+
