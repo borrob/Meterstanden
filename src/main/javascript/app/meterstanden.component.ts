@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import {Metersoorten} from './metersoorten';
 import {Meterstanden} from './meterstanden';
+import {MeterstandenService} from './meterstanden.service';
 
 @Component({
 	moduleId: module.id,
@@ -19,24 +20,29 @@ import {Meterstanden} from './meterstanden';
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>{{meterstanden.id}}</td>
-				<td>{{meterstanden.datum}}</td>
-				<td>{{meterstanden.metersoort.metersoort}}</td>
-				<td>{{meterstanden.waarde}}</td>
-				<td>{{meterstanden.omschrijving}}</td>
+			<tr *ngFor="let ms of myMeterstanden">
+				<td>{{ms.id}}</td>
+				<td>{{ms.datum}}</td>
+				<td>{{ms.metersoort.metersoort}}</td>
+				<td>{{ms.waarde}}</td>
+				<td>{{ms.omschrijving}}</td>
 			</tr>
 		</tbody>
 	</table>
 	`
 })
 
-export class MeterstandenComponent{
-	meterstanden: Meterstanden = {
-	id : 1,
-	datum : '10-12-2016',
-	waarde : 45.3,
-	omschrijving : 'sdfds',
-	metersoort : {id: 1,metersoort: 'water', unit: 'm3'}
+export class MeterstandenComponent implements OnInit{
+	constructor(private meterstandenService: MeterstandenService) {};
+	myMeterstanden: Meterstanden[];
+
+	getMeterstanden(): void {
+		this.meterstandenService
+			.getMeterstanden()
+			.then(ms => this.myMeterstanden = ms);
+	}
+
+	ngOnInit(): void {
+		this.getMeterstanden();
 	}
 }

@@ -9,6 +9,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {MetersoortenComponent} from './metersoorten.component';
 import {MeterstandenComponent} from './meterstanden.component';
 import {MaandverbruikComponent} from './maandverbruik.component';
+import {MeterstandenService} from './meterstanden.service';
 
 @NgModule({
 	imports: [
@@ -23,7 +24,7 @@ import {MaandverbruikComponent} from './maandverbruik.component';
 		MetersoortenComponent,
 		MaandverbruikComponent
 	],
-	providers: [],
+	providers: [MeterstandenService],
 	bootstrap: [AppComponent]
 })
 
