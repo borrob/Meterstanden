@@ -37,14 +37,12 @@ public class Meterstanden extends HttpServlet {
      */
     public Meterstanden() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		
 		List<Meterstanden> myMeterstanden = getLastMeterstanden("0");
 		
@@ -58,12 +56,16 @@ public class Meterstanden extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+	/**
+	 * Get the last 20 Meterstanden.
+	 * 
+	 * @param selectie ID of metersoort to get the Meterstanden from (0 = all)
+	 * @return The list of meterstanden
+	 */
 	@SuppressWarnings("unchecked")
 	private List<Meterstanden> getLastMeterstanden(String selectie){
-		//TODO write javadoc
 		log.debug("Getting the 20 last Meterstanden");
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -89,22 +91,6 @@ public class Meterstanden extends HttpServlet {
 		session.close();
 
 		return (List<Meterstanden>) rl;
-		
-	}
-	
-	@SuppressWarnings("unchecked")
-	private List<Metersoorten> getMetersoorten(){
-		//TODO write javadoc
-		log.debug("Getting all Metersoorten");
-		
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		
-		Query query = session.createQuery("from Metersoorten");
-		List<?> rl = query.getResultList();
-		
-		session.close();
-
-		return (List<Metersoorten>) rl;
 		
 	}
 
