@@ -8,7 +8,7 @@ import {Component} from '@angular/core';
 		<nav>
 			<a routerLink="/metersoorten">Metersoorten</a>
 			<a routerLink="/meterstanden">Meterstanden</a>
-			<a routerLink="/maandverbruik">Maandverbruil</a>
+			<a routerLink="/maandverbruik">Maandverbruik</a>
 		</nav>
 		<router-outlet></router-outlet>
 		`
