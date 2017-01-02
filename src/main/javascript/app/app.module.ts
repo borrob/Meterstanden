@@ -9,8 +9,10 @@ import {AppRoutingModule} from './app-routing.module';
 import {MetersoortenComponent} from './metersoorten.component';
 import {MeterstandenComponent} from './meterstanden.component';
 import {MaandverbruikComponent} from './maandverbruik.component';
+import {MaandverbruikGraphComponent} from './maandverbruikGraph.component';
 import {MeterstandenService} from './meterstanden.service';
 import {MetersoortenService} from './metersoorten.service';
+import {MaandverbruikService} from './maandverbruik.service';
 import {MaandverbruikOverzichtService} from './maandverbruikOverzicht.service';
 
 @NgModule({
@@ -24,11 +26,13 @@ import {MaandverbruikOverzichtService} from './maandverbruikOverzicht.service';
 		AppComponent,
 		MeterstandenComponent,
 		MetersoortenComponent,
-		MaandverbruikComponent
+		MaandverbruikComponent,
+		MaandverbruikGraphComponent
 	],
 	providers: [
 		MeterstandenService,
 		MetersoortenService,
+		MaandverbruikService,
 		MaandverbruikOverzichtService
 	],
 	bootstrap: [AppComponent]
