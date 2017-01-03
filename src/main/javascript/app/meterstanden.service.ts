@@ -14,7 +14,6 @@ export class MeterstandenService {
 	constructor(private http: Http) {}
 	
 	getMeterstanden(): Promise<Meterstanden[]> {
-		console.log("getting Meterstanden");
 		return this.http.get(this.meterstandenURL)
 			.toPromise()
 			.then(response => response.json() as Meterstanden[])
