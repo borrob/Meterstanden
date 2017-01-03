@@ -113,7 +113,8 @@ export class MaandverbruikGraphComponent implements OnInit{
 				borderWidth: 1,
 				pointRadius: 5,
 				pointBackgroundColor: 'rgb(10,10,10)',
-				backgroundColor: 'rgba(10,10,10,0.2)'
+				backgroundColor: 'rgba(10,10,10,0.2)',
+				pointBorderColor: "rgb(10,10,10)"
 			});
 		}
 		if (this.myMaandverbruik2[0]){
@@ -123,7 +124,8 @@ export class MaandverbruikGraphComponent implements OnInit{
 				borderWidth: 1,
 				pointRadius: 5,
 				pointBackgroundColor: 'rgb(0,0,200)',
-				backgroundColor: 'rgba(0,0,200,0.2)'
+				backgroundColor: 'rgba(0,0,200,0.2)',
+				pointBorderColor: "rgb(0,0,200)"
 			});
 		}
 		if (this.myMaandverbruik3[0]){
@@ -133,7 +135,8 @@ export class MaandverbruikGraphComponent implements OnInit{
 				borderWidth: 1,
 				pointRadius: 5,
 				pointBackgroundColor: 'rgb(0,200,0)',
-				backgroundColor: 'rgba(0,200,0,0.2)'
+				backgroundColor: 'rgba(0,200,0,0.2)',
+				pointBorderColor: "rgb(0,200,0)"
 			});
 		}
 
