@@ -36,7 +36,7 @@ import '../javascript_libs/Chart.min.js';
 			<option value=2015>2015</option>
 			<option value=2014>2014</option>
 		</select>
-		<div><canvas id="myChart" width=400 height=400></canvas></div>
+		<div><canvas id="myChart" width=200 height=100></canvas></div>
 		`
 })
 
@@ -63,25 +63,6 @@ export class MaandverbruikGraphComponent implements OnInit{
 		this.update();
 	}
 
-	update(): void {
-		Promise.all([
-				this.maandverbruikService.getMaandverbruiken(this.selectedY1,this.selectedMetersoortId),
-				this.maandverbruikService.getMaandverbruiken(this.selectedY2,this.selectedMetersoortId),
-				this.maandverbruikService.getMaandverbruiken(this.selectedY3,this.selectedMetersoortId)
-			]).then(r => this.prepareAndDraw(r));
-	}
-
-	prepareAndDraw(r: any){
-		this.myMaandverbruik1 = r[0];
-		this.myDrawData1 = this.maandverbruikToData(r[0]);
-		this.myMaandverbruik2 = r[1];
-		this.myDrawData2 = this.maandverbruikToData(r[1]);
-		this.myMaandverbruik3 = r[2];
-		this.myDrawData3 = this.maandverbruikToData(r[2]);
-	
-		this.updateAndDraw();
-	}
-
 	year1Change(id: number): void {
 		this.selectedY1=id;
 		this.update();
@@ -97,12 +78,32 @@ export class MaandverbruikGraphComponent implements OnInit{
 		this.update();
 	}
 
-	getMetersoorten(): void {
-		this.metersoortenService.getMetersoorten()
-			.then(ms => this.myMetersoorten=ms);
+	update(): void {
+		Promise.all([
+				this.maandverbruikService.getMaandverbruiken(this.selectedY1,this.selectedMetersoortId),
+				this.maandverbruikService.getMaandverbruiken(this.selectedY2,this.selectedMetersoortId),
+				this.maandverbruikService.getMaandverbruiken(this.selectedY3,this.selectedMetersoortId)
+			]).then(r => this.prepareAndDraw(r));
 	}
 
-	updateAndDraw():void{
+	/*
+	 * Convert the responses of the getMaandverbruiken requests and convert them
+	 * into the drawformat that Chart uses.
+	 *
+	 * r: any - array with the responses of the getMaandverbruiken
+	*/
+	prepareAndDraw(r: any){
+		this.myMaandverbruik1 = r[0];
+		this.myDrawData1 = this.maandverbruikToData(r[0]);
+		this.myMaandverbruik2 = r[1];
+		this.myDrawData2 = this.maandverbruikToData(r[1]);
+		this.myMaandverbruik3 = r[2];
+		this.myDrawData3 = this.maandverbruikToData(r[2]);
+
+		this.draw();
+	}
+
+	draw(): void{
 		var ctx = document.getElementById('myChart');
 
 		var datasets=[];
@@ -169,6 +170,11 @@ export class MaandverbruikGraphComponent implements OnInit{
 			out.push(mv[m].verbruik);
 		}
 		return out;
+	}
+
+	getMetersoorten(): void {
+		this.metersoortenService.getMetersoorten()
+			.then(ms => this.myMetersoorten=ms);
 	}
 
 	ngOnInit(): void {
