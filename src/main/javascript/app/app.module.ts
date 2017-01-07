@@ -14,6 +14,7 @@ import {MeterstandenService} from './meterstanden.service';
 import {MetersoortenService} from './metersoorten.service';
 import {MaandverbruikService} from './maandverbruik.service';
 import {MaandverbruikOverzichtService} from './maandverbruikOverzicht.service';
+import {MaandverbruikJaarService} from './maandverbruikJaar.service';
 
 @NgModule({
 	imports: [
@@ -33,7 +34,8 @@ import {MaandverbruikOverzichtService} from './maandverbruikOverzicht.service';
 		MeterstandenService,
 		MetersoortenService,
 		MaandverbruikService,
-		MaandverbruikOverzichtService
+		MaandverbruikOverzichtService,
+		MaandverbruikJaarService
 	],
 	bootstrap: [AppComponent]
 })

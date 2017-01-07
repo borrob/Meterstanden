@@ -4,6 +4,8 @@ import {Maandverbruik} from './maandverbruik';
 import {MaandverbruikService} from './maandverbruik.service';
 import {Metersoorten} from './metersoorten';
 import {MetersoortenService} from './metersoorten.service';
+import {MaandverbruikJaar} from './maandverbruikjaar';
+import {MaandverbruikJaarService} from './maandverbruikJaar.service';
 
 declare var Chart: any;
 import '../javascript_libs/Chart.min.js';
@@ -20,21 +22,21 @@ import '../javascript_libs/Chart.min.js';
 			</option>
 		</select>
 		<select name="year1" #y1 (change)="year1Change(y1.value)">
-			<option value=2016>2016</option>
-			<option value=2015>2015</option>
-			<option value=2014>2014</option>
+			<option *ngFor="let myY of myYears"
+				[value]="myY.jaar">{{myY.jaar}}
+			</option>
 		</select>
 		<select name="year2" #y2 (change)="year2Change(y2.value)">
 			<option value=0>--</option>
-			<option value=2016>2016</option>
-			<option value=2015>2015</option>
-			<option value=2014>2014</option>
+			<option *ngFor="let myY of myYears"
+				[value]="myY.jaar">{{myY.jaar}}
+			</option>
 		</select>
 		<select name="year3" #y3 (change)="year3Change(y3.value)">
 			<option value=0>--</option>
-			<option value=2016>2016</option>
-			<option value=2015>2015</option>
-			<option value=2014>2014</option>
+			<option *ngFor="let myY of myYears"
+				[value]="myY.jaar">{{myY.jaar}}
+			</option>
 		</select>
 		<div><canvas id="myChart" width=200 height=100></canvas></div>
 		`
@@ -43,7 +45,8 @@ import '../javascript_libs/Chart.min.js';
 export class MaandverbruikGraphComponent implements OnInit{
 	constructor(
 		private maandverbruikService: MaandverbruikService,
-		private metersoortenService: MetersoortenService
+		private metersoortenService: MetersoortenService,
+		private maandverbruikjaarService: MaandverbruikJaarService
 	){};
 
 	myMaandverbruik1: Maandverbruik[];
@@ -57,6 +60,7 @@ export class MaandverbruikGraphComponent implements OnInit{
 	selectedY1: number = 2016;
 	selectedY2: number = 0;
 	selectedY3: number = 0;
+	myYears: MaandverbruikJaar[];
 
 	metersoortChangeUI(id: number): void{
 		this.selectedMetersoortId = id;
@@ -177,8 +181,15 @@ export class MaandverbruikGraphComponent implements OnInit{
 			.then(ms => this.myMetersoorten=ms);
 	}
 
+	getJaren():void {
+		this.maandverbruikjaarService.getMaandverbruikjaren()
+			.then(m => this.myYears=m);
+			//.then(m => console.log(m));
+	}
+
 	ngOnInit(): void {
 		this.metersoortChangeUI(this.selectedMetersoortId);
+		this.getJaren();
 		this.getMetersoorten();
 	}
 }
