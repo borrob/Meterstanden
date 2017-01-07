@@ -36,6 +36,8 @@ import {MetersoortenService} from './metersoorten.service';
 			</tr>
 		</tbody>
 	</table>
+	<button (click)="currentPage!=0 && goBack()"><</button>
+	<button (click)="myMeterstanden[19] != null && goNext()">></button>
 	`
 })
 
@@ -46,14 +48,28 @@ export class MeterstandenComponent implements OnInit{
 	) {};
 	myMeterstanden: Meterstanden[];
 	myMetersoorten: Metersoorten[];
+	selectedMetersoort: number = 0;
+	currentPage: number = 0;
 
 	metersoortChangeUI(ms: number): void {
-		this.getMeterstanden(ms);
+		this.currentPage=0;
+		this.selectedMetersoort=ms;
+		this.getMeterstanden(this.selectedMetersoort, this.currentPage);
 	}
 
-	getMeterstanden(ms: number): void {
+	goBack(): void {
+		this.currentPage--;
+		this.getMeterstanden(this.selectedMetersoort, this.currentPage);
+	}
+
+	goNext(): void {
+		this.currentPage++;
+		this.getMeterstanden(this.selectedMetersoort, this.currentPage);
+	}
+
+	getMeterstanden(ms: number, p: number): void {
 		this.meterstandenService
-			.getMeterstanden(ms)
+			.getMeterstanden(ms, p)
 			.then(mst => this.myMeterstanden = mst);
 	}
 
@@ -64,7 +80,7 @@ export class MeterstandenComponent implements OnInit{
 	}
 
 	ngOnInit(): void {
-		this.getMeterstanden(0);
+		this.getMeterstanden(this.selectedMetersoort, this.currentPage);
 		this.getMetersoorten();
 	}
 }

@@ -46,7 +46,10 @@ public class Meterstanden extends HttpServlet {
 		int ms = request.getParameterMap().containsKey("ms") ? 
 				Integer.valueOf(request.getParameter("ms")) : 
 				0;
-		List<Meterstanden> myMeterstanden = getLastMeterstanden(Integer.toString(ms));
+		int p = request.getParameterMap().containsKey("p") ? 
+						Integer.valueOf(request.getParameter("p")) : 
+						0;
+		List<Meterstanden> myMeterstanden = getLastMeterstanden(Integer.toString(ms), p);
 		
 		Gson gson = new Gson();
 		log.debug("The meterstanden JSON:");
@@ -67,7 +70,7 @@ public class Meterstanden extends HttpServlet {
 	 * @return The list of meterstanden
 	 */
 	@SuppressWarnings("unchecked")
-	private List<Meterstanden> getLastMeterstanden(String selectie){
+	private List<Meterstanden> getLastMeterstanden(String selectie, Integer page){
 		log.debug("Getting the 20 last Meterstanden");
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -87,6 +90,7 @@ public class Meterstanden extends HttpServlet {
 		if (useSelection){
 			query.setParameter("metersoort", metersoort);
 		}
+		query.setFirstResult(20 * page);
 		query.setMaxResults(20); //todo this 20 should be configured with a config file.
 		List<?> rl = query.getResultList();
 		

@@ -13,9 +13,10 @@ export class MeterstandenService {
 	
 	constructor(private http: Http) {}
 	
-	getMeterstanden(ms: number): Promise<Meterstanden[]> {
+	getMeterstanden(ms: number, p: number): Promise<Meterstanden[]> {
 		let params = new URLSearchParams();
 		params.set("ms", ms.toString());
+		params.set("p", p.toString());
 		return this.http.get(this.meterstandenURL, {search: params})
 			.toPromise()
 			.then(response => response.json() as Meterstanden[])
