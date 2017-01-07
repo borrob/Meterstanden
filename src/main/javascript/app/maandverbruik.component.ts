@@ -30,6 +30,8 @@ import {MetersoortenService} from './metersoorten.service';
 			</tr>
 		</tbody>
 	</table>
+	<button (click)="currentPage!=0 && goBack()"><</button>
+	<button (click)="myMaandverbruikOverzicht[19] != null && goNext()">></button>
 	`
 })
 
@@ -41,10 +43,21 @@ export class MaandverbruikComponent implements OnInit {
 
 	myMaandverbruikOverzicht: MaandverbruikOverzicht[];
 	myMetersoorten: Metersoorten[];
+	currentPage: number=0;
 
-	getMaandverbruik(): void {
+	goBack(): void {
+		this.currentPage--;
+		this.getMaandverbruik(this.currentPage);
+	}
+
+	goNext(): void {
+		this.currentPage++;
+		this.getMaandverbruik(this.currentPage);
+	}
+
+	getMaandverbruik(p: number): void {
 		this.maandverbruikOverzichtService.
-			getMaandverbruiken()
+			getMaandverbruiken(p)
 			.then(ms => this.myMaandverbruikOverzicht = ms);
 	}
 
@@ -56,6 +69,6 @@ export class MaandverbruikComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.getMetersoorten();
-		this.getMaandverbruik();
+		this.getMaandverbruik(this.currentPage);
 	}
 }

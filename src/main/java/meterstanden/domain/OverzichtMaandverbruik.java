@@ -43,6 +43,10 @@ public class OverzichtMaandverbruik extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int p = request.getParameterMap().containsKey("p") ? 
+				Integer.valueOf(request.getParameter("p")) : 
+				0;
+		
 		List<MonthList> ml_overviewList = new ArrayList<MonthList>();
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();	
@@ -53,6 +57,7 @@ public class OverzichtMaandverbruik extends HttpServlet {
 		hql.append(" order by mv.jaar desc, mv.maand desc");
 		Query qMaandverbruiken = session.createQuery(hql.toString());
 		qMaandverbruiken.setMaxResults(20);
+		qMaandverbruiken.setFirstResult(20 * p);
 		List<?> maandverbruikenList = qMaandverbruiken.getResultList();
 		Iterator<?> maandverbruikenIt = maandverbruikenList.iterator();
 		

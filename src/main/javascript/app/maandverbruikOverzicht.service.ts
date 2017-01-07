@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Headers, Http} from '@angular/http';
+import {Headers, Http, URLSearchParams} from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -13,8 +13,10 @@ export class MaandverbruikOverzichtService {
 	
 	constructor(private http: Http) {}
 	
-	getMaandverbruiken(): Promise<MaandverbruikOverzicht[]> {
-		return this.http.get(this.overzichtmaandverbruikURL)
+	getMaandverbruiken(p: number): Promise<MaandverbruikOverzicht[]> {
+		let params = new URLSearchParams();
+		params.set("p", p.toString());
+		return this.http.get(this.overzichtmaandverbruikURL, {search: params})
 			.toPromise()
 			.then(response => response.json() as MaandverbruikOverzicht[])
 			.catch(this.handleError);
