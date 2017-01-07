@@ -10,7 +10,7 @@
     "build": "npm run cleanbuild && browserify -d -s main dist/main.js > dist/bundle.js",
     "build_prod": "npm run build && npm run minify",
     "minify": "uglifyjs dist/bundle.js --screw-ie8 --compress --mangle --output dist/bundle.min.js",
-    "deploy": "npm run build_prod && cp dist/bundle.min.js ../../../WebContent/lib/app.min.js"
+    "deploy": "rm ../../../WebContent/lib/app.min.js && npm run build_prod && cp dist/bundle.min.js ../../../WebContent/lib/app.min.js"
   },
   "keywords": [],
   "author": "borrob",

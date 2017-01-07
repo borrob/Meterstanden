@@ -3,12 +3,19 @@ import {Component, OnInit} from '@angular/core';
 import {Metersoorten} from './metersoorten';
 import {Meterstanden} from './meterstanden';
 import {MeterstandenService} from './meterstanden.service';
+import {MetersoortenService} from './metersoorten.service';
 
 @Component({
 	moduleId: module.id,
 	selector: 'my-meterstanden',
 	template: `
 	<h2>Meterstanden</h2>
+	<select name="meterstand_metersoort_select" #ms (change)="metersoortChangeUI(ms.value)">
+		<option value=0>All</option>
+		<option *ngFor="let m of myMetersoorten"
+			[value]="m.id">{{m.metersoort}}
+		</option>
+	</select>
 	<table>
 		<thead>
 			<tr>
@@ -33,16 +40,31 @@ import {MeterstandenService} from './meterstanden.service';
 })
 
 export class MeterstandenComponent implements OnInit{
-	constructor(private meterstandenService: MeterstandenService) {};
+	constructor(
+		private meterstandenService: MeterstandenService,
+		private metersoortenService: MetersoortenService
+	) {};
 	myMeterstanden: Meterstanden[];
+	myMetersoorten: Metersoorten[];
 
-	getMeterstanden(): void {
+	metersoortChangeUI(ms: number): void {
+		this.getMeterstanden(ms);
+	}
+
+	getMeterstanden(ms: number): void {
 		this.meterstandenService
-			.getMeterstanden()
-			.then(ms => this.myMeterstanden = ms);
+			.getMeterstanden(ms)
+			.then(mst => this.myMeterstanden = mst);
+	}
+
+	getMetersoorten(): void {
+		this.metersoortenService
+			.getMetersoorten()
+			.then(ms => this.myMetersoorten = ms);
 	}
 
 	ngOnInit(): void {
-		this.getMeterstanden();
+		this.getMeterstanden(0);
+		this.getMetersoorten();
 	}
 }

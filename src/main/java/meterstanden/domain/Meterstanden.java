@@ -43,8 +43,10 @@ public class Meterstanden extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		List<Meterstanden> myMeterstanden = getLastMeterstanden("0");
+		int ms = request.getParameterMap().containsKey("ms") ? 
+				Integer.valueOf(request.getParameter("ms")) : 
+				0;
+		List<Meterstanden> myMeterstanden = getLastMeterstanden(Integer.toString(ms));
 		
 		Gson gson = new Gson();
 		log.debug("The meterstanden JSON:");

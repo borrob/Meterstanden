@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Headers, Http} from '@angular/http';
+import {Headers, Http, URLSearchParams} from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -13,8 +13,10 @@ export class MeterstandenService {
 	
 	constructor(private http: Http) {}
 	
-	getMeterstanden(): Promise<Meterstanden[]> {
-		return this.http.get(this.meterstandenURL)
+	getMeterstanden(ms: number): Promise<Meterstanden[]> {
+		let params = new URLSearchParams();
+		params.set("ms", ms.toString());
+		return this.http.get(this.meterstandenURL, {search: params})
 			.toPromise()
 			.then(response => response.json() as Meterstanden[])
 			.catch(this.handleError);
