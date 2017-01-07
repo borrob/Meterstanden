@@ -1,21 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Meterstanden</title>
+<html>
+	<head>
+		<base href="/">
+		<title>Hero application</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="styles.css">
 
-    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    
-    <script src="lib/jquery/jquery-3.1.0.min.js"></script>
-    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+		<!-- Polyfill(s) for older browsers -->
+		<script src="meterstanden/lib/node/shim.min.js"></script>
 
-  </head>
-  <body>
-    <h1>Hello, world!</h1>
+		<script src="meterstanden/lib/node/zone.js"></script>
+		<script src="meterstanden/lib/node/Reflect.js"></script>
+		<script src="meterstanden/lib/app.min.js"></script>
+		<script src="meterstanden/lib/Chart.min.js"></script>
+	</head>
 
-
-  </body>
+	<body>
+		<my-app>Loading AppComponent content here ...</my-app>
+	</body>
 </html>
