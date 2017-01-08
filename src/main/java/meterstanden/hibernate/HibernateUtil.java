@@ -114,6 +114,23 @@ public class HibernateUtil {
 		return true;
 	}
 	
+	public static boolean deleteMetersoort(Long id){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			Metersoorten ms = session.get(Metersoorten.class, id);
+			session.delete("Metersoorten", ms);
+			session.getTransaction().commit();
+			log.debug("Metersoort with id = " + Long.valueOf(id) + " is deleted.");
+		} catch (Exception e) {
+			log.error("Could not delete Metersorot. Got error: " + e.toString() + " for metersoort: " + Long.valueOf(id));
+			return false;
+		} finally {
+			session.close();
+		}
+		return true;
+	}
+	
 	/**
 	 * Persist an object of Maandverbruik
 	 * 

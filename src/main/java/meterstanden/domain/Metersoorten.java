@@ -57,6 +57,28 @@ public class Metersoorten extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
+	
+	/**
+	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
+	 */
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Long ms;
+		if (request.getParameterMap().containsKey("ms")){
+			ms = Long.valueOf(request.getParameter("ms"));
+		} else {
+			log.error("Deleting metersoort, but no parameters were given.");
+			throw new ServletException("missing parameters");
+		}
+
+		try {
+			HibernateUtil.deleteMetersoort(ms);
+			log.debug("Metersoort with id = " + Long.valueOf(ms) + " is deleted.");
+		} catch (Exception e) {
+			log.error("Could not delete metersoort. Got error: " + e.toString() + " for metersoort: " + Long.valueOf(ms));
+			throw new ServletException("Error on deleting metersoort: " + e.toString());
+		} 
+	}
+	
 	/**
 	 * Get the Metersoorten.
 	 * 

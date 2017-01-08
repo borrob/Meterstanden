@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Headers, Http} from '@angular/http';
+import {Headers, Http, URLSearchParams} from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -17,6 +17,14 @@ export class MetersoortenService {
 		return this.http.get(this.metersoortenURL)
 			.toPromise()
 			.then(response => response.json() as Metersoorten[])
+			.catch(this.handleError);
+	}
+
+	delete(id: number): Promise<any>{
+		let params = new URLSearchParams()
+		params.set('ms', id.toString());
+		return this.http.delete(this.metersoortenURL, {search: params})
+			.toPromise()
 			.catch(this.handleError);
 	}
 	
