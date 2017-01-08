@@ -67,4 +67,9 @@ public class Metersoorten {
 	public String toString() {
 		return "Metersoorten [id=" + id + ", metersoort=" + metersoort + ", unit=" + unit + "]";
 	}
+	
+	public void copyFrom(Metersoorten m){
+		this.metersoort=m.getMetersoort();
+		this.unit=m.getUnit();
+	}
 }

@@ -31,7 +31,10 @@ import '../javascript_libs/jquery-3.1.1.min.js';
 							<td>{{ms.id}}</td>
 							<td>{{ms.metersoort}}</td>
 							<td>{{ms.unit}}</td>
-							<td><button (click)="delete(ms.id)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+							<td>
+								<button (click)="delete(ms.id)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+								<button (click)="updateMetersoort(ms.id)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -44,7 +47,7 @@ import '../javascript_libs/jquery-3.1.1.min.js';
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="myModalLabel">Delete Meterstoort</h4>
+						<h4 class="modal-title" id="myModalLabel">Delete Metersoort</h4>
 					</div>
 					<div class="modal-body">
 						<p>Are you sure you want to delete the metersoort: {{selectedMetersoort.metersoort}} ?</p>
@@ -52,6 +55,45 @@ import '../javascript_libs/jquery-3.1.1.min.js';
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 						<button type="button" class="btn btn-primary" data-dismiss="modal" (click)="reallyDelete(selectedMetersoort.id)">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Update Meterstand Modal -->
+		<div class="modal fade" id="updateMetersoortModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">Change Meterstoort</h4>
+					</div>
+					<div class="modal-body">
+						<p>Change the metersoort: {{selectedMetersoort.metersoort}} ?</p>
+						<form id="updateMetersoortForm" class="form form-horizontal">
+							<div class="form-group">
+								<label for="updateIDfield" class="col-sm-2 control-label">id</label>
+								<div class="col-sm-10">
+									<input type="number" class="form-control" id="updateIDfield" value="{{selectedMetersoort.id}}" disabled/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="updateMetersoortfield" class="col-sm-2 control-label">metersoort</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="updateMetersoortfield" value="{{selectedMetersoort.metersoort}}"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="updateUnitfield" class="col-sm-2 control-label">unit</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="updateUnitfield" value="{{selectedMetersoort.unit}}"/>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" (click)="reallyUpdate()">Save changes</button>
 					</div>
 				</div>
 			</div>
@@ -77,6 +119,29 @@ export class MetersoortenComponent implements OnInit{
 		this.metersoortenService
 			.delete(id)
 			.then(r => this.succesDelete());
+	}
+
+	updateMetersoort(id: number): void {
+		for (var i in this.myMetersoorten){
+			if (id == this.myMetersoorten[i].id){
+				this.selectedMetersoort = this.myMetersoorten[i];
+			}
+		}
+		$('#updateMetersoortModal').modal();
+	}
+
+	reallyUpdate(): void {
+		var m = new Metersoorten();
+		m.id=$('#updateIDfield')[0].value;
+		m.metersoort=$('#updateMetersoortfield')[0].value;
+		m.unit=$('#updateUnitfield')[0].value;
+		this.metersoortenService.update(m)
+			.then(r => this.succuesUpdate());
+	}
+
+	succuesUpdate(): void {
+		$('body').prepend('<div class="alert alert-success alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Success!</strong> The metersoort is changed.</div>');
+		this.getMetersoorten();
 	}
 
 	succesDelete(): void {

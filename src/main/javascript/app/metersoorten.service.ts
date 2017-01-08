@@ -27,6 +27,14 @@ export class MetersoortenService {
 			.toPromise()
 			.catch(this.handleError);
 	}
+
+	update(data: Metersoorten): Promise<any>{
+		let headers = new Headers();
+		headers.append('Content-Type', 'application/json');
+		return this.http.post(this.metersoortenURL, data, {headers})
+			.toPromise()
+			.catch(this.handleError);
+	}
 	
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error); // for demo purposes only
