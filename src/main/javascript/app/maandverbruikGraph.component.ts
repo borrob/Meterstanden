@@ -14,31 +14,39 @@ import '../javascript_libs/Chart.min.js';
 	moduleId: module.id,
 	selector: 'my-maandverbruikgraph',
 	template: `
-		<h2>Graph maandverbruik</h2>
-		<select name="metersoort" #ms (change)="metersoortChangeUI(ms.value)">
-			<option *ngFor="let m of myMetersoorten"
-				[value]="m.id"
-				>{{m.metersoort}}
-			</option>
-		</select>
-		<select name="year1" #y1 (change)="year1Change(y1.value)">
-			<option *ngFor="let myY of myYears"
-				[value]="myY.jaar">{{myY.jaar}}
-			</option>
-		</select>
-		<select name="year2" #y2 (change)="year2Change(y2.value)">
-			<option value=0>--</option>
-			<option *ngFor="let myY of myYears"
-				[value]="myY.jaar">{{myY.jaar}}
-			</option>
-		</select>
-		<select name="year3" #y3 (change)="year3Change(y3.value)">
-			<option value=0>--</option>
-			<option *ngFor="let myY of myYears"
-				[value]="myY.jaar">{{myY.jaar}}
-			</option>
-		</select>
-		<div><canvas id="myChart" width=200 height=100></canvas></div>
+			<div class="row">
+				<div class="col-xs-12">
+					<h2>Graph maandverbruik</h2>
+					<select name="metersoort" #ms (change)="metersoortChangeUI(ms.value)">
+						<option *ngFor="let m of myMetersoorten"
+							[value]="m.id"
+							>{{m.metersoort}}
+						</option>
+					</select>
+					<select name="year1" #y1 (change)="year1Change(y1.value)">
+						<option *ngFor="let myY of myYears"
+							[value]="myY.jaar">{{myY.jaar}}
+						</option>
+					</select>
+					<select name="year2" #y2 (change)="year2Change(y2.value)">
+						<option value=0>--</option>
+						<option *ngFor="let myY of myYears"
+							[value]="myY.jaar">{{myY.jaar}}
+						</option>
+					</select>
+					<select name="year3" #y3 (change)="year3Change(y3.value)">
+						<option value=0>--</option>
+						<option *ngFor="let myY of myYears"
+							[value]="myY.jaar">{{myY.jaar}}
+						</option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					><canvas id="myChart" width="200px" height="100px"></canvas>
+				</div>
+			</div>
 		`
 })
 

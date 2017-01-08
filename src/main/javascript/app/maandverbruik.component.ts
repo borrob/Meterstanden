@@ -9,30 +9,42 @@ import {MetersoortenService} from './metersoorten.service';
 	moduleId: module.id,
 	selector: 'my-maandverbruik',
 	template: `
-	<h2>Maandverbruik</h2>
-	<table>
-		<thead>
-			<tr>
-				<td>jaar</td>
-				<td>maand</td>
-				<td *ngFor="let ms of myMetersoorten">
-					{{ms.metersoort}}
-				</td>
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor="let m of myMaandverbruikOverzicht">
-				<td>{{m.jaar}}</td>
-				<td>{{m.maand}}</td>
-				<td *ngFor="let ms of m.mv">
-					{{ms.verbruik | number: '1.1-1'}} {{ms.metersoort.unit}}/maand
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<button (click)="currentPage!=0 && goBack()"><</button>
-	<button (click)="myMaandverbruikOverzicht[19] != null && goNext()">></button>
-	`
+		<div class="row">
+			<div class="col-xs-12">
+				<h2>Maandverbruik</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs=12">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>jaar</th>
+							<th>maand</th>
+							<th *ngFor="let ms of myMetersoorten">
+								{{ms.metersoort}}
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let m of myMaandverbruikOverzicht">
+							<td>{{m.jaar}}</td>
+							<td>{{m.maand}}</td>
+							<td *ngFor="let ms of m.mv">
+								{{ms.verbruik | number: '1.1-1'}} {{ms.metersoort.unit}}/maand
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<button (click)="currentPage!=0 && goBack()" class="btn btn-primary"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></button>
+				<button (click)="myMaandverbruikOverzicht[19] != null && goNext()" class="btn btn-primary"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></button>
+			</div>
+		</div>
+		`
 })
 
 export class MaandverbruikComponent implements OnInit {

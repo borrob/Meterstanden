@@ -9,36 +9,48 @@ import {MetersoortenService} from './metersoorten.service';
 	moduleId: module.id,
 	selector: 'my-meterstanden',
 	template: `
-	<h2>Meterstanden</h2>
-	<select name="meterstand_metersoort_select" #ms (change)="metersoortChangeUI(ms.value)">
-		<option value=0>All</option>
-		<option *ngFor="let m of myMetersoorten"
-			[value]="m.id">{{m.metersoort}}
-		</option>
-	</select>
-	<table>
-		<thead>
-			<tr>
-				<td>id</td>
-				<td>datum</td>
-				<td>metersoort</td>
-				<td>stand</td>
-				<td>omschrijving</td>
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor="let ms of myMeterstanden">
-				<td>{{ms.id}}</td>
-				<td>{{ms.datum}}</td>
-				<td>{{ms.metersoort.metersoort}}</td>
-				<td>{{ms.waarde}}</td>
-				<td>{{ms.omschrijving}}</td>
-			</tr>
-		</tbody>
-	</table>
-	<button (click)="currentPage!=0 && goBack()"><</button>
-	<button (click)="myMeterstanden[19] != null && goNext()">></button>
-	`
+		<div class="row">
+			<div class="col-xs-12">
+				<h2>Meterstanden</h2>
+				<select name="meterstand_metersoort_select" #ms (change)="metersoortChangeUI(ms.value)">
+					<option value=0>All</option>
+					<option *ngFor="let m of myMetersoorten"
+						[value]="m.id">{{m.metersoort}}
+					</option>
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<table id="meterstanden_table" class="table table-hover">
+					<thead>
+						<tr>
+							<th>id</th>
+							<th>datum</th>
+							<th>metersoort</th>
+							<th>stand</th>
+							<th>omschrijving</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let ms of myMeterstanden" id="row_{{ms.id}}">
+							<td>{{ms.id}}</td>
+							<td>{{ms.datum}}</td>
+							<td>{{ms.metersoort.metersoort}}</td>
+							<td>{{ms.waarde}}</td>
+							<td>{{ms.omschrijving}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<button (click)="currentPage!=0 && goBack()" class="btn btn-primary"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></button>
+				<button (click)="myMeterstanden[19] != null && goNext()" class="btn btn-primary"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></button>
+			</div>
+		</div>
+		`
 })
 
 export class MeterstandenComponent implements OnInit{
