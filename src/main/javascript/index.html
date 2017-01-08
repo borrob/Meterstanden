@@ -2,10 +2,11 @@
 <html>
 	<head>
 		<base href="/">
-		<title>Hero application</title>
+		<title>Meterstanden</title>
 		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="styles.css">
+		<link href="javascript_libs/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 
 		<!-- Polyfill(s) for older browsers -->
 		<script src="node_modules/core-js/client/shim.min.js"></script>
@@ -14,9 +15,12 @@
 		<script src="node_modules/reflect-metadata/Reflect.js"></script>
 		<script src="dist/bundle.js"></script>
 		<script src="javascript_libs/Chart.min.js"></script>
+		<!--<script src="javascript_libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>-->
 	</head>
 
 	<body>
-		<my-app>Loading AppComponent content here ...</my-app>
+		<div class="container">
+			<my-app>Loading AppComponent content here ...</my-app>
+		</div>
 	</body>
 </html>

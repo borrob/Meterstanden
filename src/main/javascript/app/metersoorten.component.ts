@@ -7,23 +7,31 @@ import {MetersoortenService} from './metersoorten.service'
 	moduleId: module.id,
 	selector: 'my-metersoorten',
 	template: `
-		<h2>Metersoorten</h2>
-		<table>
-			<thead>
-				<tr>
-					<td>id</td>
-					<td>metersoort</td>
-					<td>unit</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr *ngFor="let ms of myMetersoorten">
-					<td>{{ms.id}}</td>
-					<td>{{ms.metersoort}}</td>
-					<td>{{ms.unit}}</td>
-				</tr>
-			</tbody>
-		</table>
+		<div class="row">
+			<div class="col-xs-12">
+				<h2>Metersoorten</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>id</th>
+							<th>metersoort</th>
+							<th>unit</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let ms of myMetersoorten">
+							<td>{{ms.id}}</td>
+							<td>{{ms.metersoort}}</td>
+							<td>{{ms.unit}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	`
 })
 
