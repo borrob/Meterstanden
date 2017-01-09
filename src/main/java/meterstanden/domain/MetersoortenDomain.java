@@ -11,15 +11,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.connector.Request;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
-import main.java.meterstanden.model.Metersoorten;
 import main.java.meterstanden.hibernate.HibernateUtil;
+import main.java.meterstanden.model.Metersoorten;
+
 
 /**
  * Servlet implementation class Metersoorten
@@ -78,6 +77,29 @@ public class MetersoortenDomain extends HttpServlet {
 	    } finally {
 	    	session.close();
 	    }
+	}
+	
+	/**
+	 * @see HttpServlet#doPut(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		log.debug("Working on a PUT request: adding metersoort.");
+		
+		//read post data from json
+		Metersoorten m = jsonToMetersoorten(request);
+		
+	    //persisting in database
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try{
+			session.beginTransaction();
+			session.save(m);
+			session.getTransaction().commit();
+			log.info("New metersoort added.");
+		} catch (Exception e) {
+			log.error("Could not save metersoort, got error: " + e.toString());
+		} finally {
+			session.close();
+		}
 	}
 	
 	/**

@@ -13,6 +13,7 @@ import '../javascript_libs/jquery-3.1.1.min.js';
 		<div class="row">
 			<div class="col-xs-12">
 				<h2>Metersoorten</h2>
+				<button (click)="newMetersoort()" class="btn btn-primary">new metersoort</button>
 			</div>
 		</div>
 		<div class="row">
@@ -41,13 +42,13 @@ import '../javascript_libs/jquery-3.1.1.min.js';
 			</div>
 		</div>
 
-		<!-- Delete Meterstand Modal -->
+		<!-- Delete Metersoort Modal -->
 		<div class="modal fade" id="deleteMetersoortModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="myModalLabel">Delete Metersoort</h4>
+						<h4 class="modal-title" id="deleteModalLabel">Delete Metersoort</h4>
 					</div>
 					<div class="modal-body">
 						<p>Are you sure you want to delete the metersoort: {{selectedMetersoort.metersoort}} ?</p>
@@ -60,13 +61,13 @@ import '../javascript_libs/jquery-3.1.1.min.js';
 			</div>
 		</div>
 
-		<!-- Update Meterstand Modal -->
+		<!-- Update Metersoort Modal -->
 		<div class="modal fade" id="updateMetersoortModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="myModalLabel">Change Meterstoort</h4>
+						<h4 class="modal-title" id="updateModalLabel">Change Meterstoort</h4>
 					</div>
 					<div class="modal-body">
 						<p>Change the metersoort: {{selectedMetersoort.metersoort}} ?</p>
@@ -94,6 +95,39 @@ import '../javascript_libs/jquery-3.1.1.min.js';
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 						<button type="button" class="btn btn-primary" data-dismiss="modal" (click)="reallyUpdate()">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- New Metersoort Modal -->
+		<div class="modal fade" id="newMetersoortModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="newModalLabel">New Meterstoort</h4>
+					</div>
+					<div class="modal-body">
+						<p>Add a metersoort</p>
+						<form id="newMetersoortForm" class="form form-horizontal">
+							<div class="form-group">
+								<label for="newMetersoortfield" class="col-sm-2 control-label">metersoort</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="newMetersoortfield" placeholder="new metersoort"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="newUnitfield" class="col-sm-2 control-label">unit</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="newUnitfield" placeholder="the new unit"/>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" (click)="reallyNew()">Save changes</button>
 					</div>
 				</div>
 			</div>
@@ -137,6 +171,23 @@ export class MetersoortenComponent implements OnInit{
 		m.unit=$('#updateUnitfield')[0].value;
 		this.metersoortenService.update(m)
 			.then(r => this.succuesUpdate());
+	}
+
+	newMetersoort(): void {
+		$('#newMetersoortModal').modal();
+	}
+
+	reallyNew(): void {
+		var m = new Metersoorten();
+		m.metersoort=$('#newMetersoortfield')[0].value;
+		m.unit=$('#newUnitfield')[0].value;
+		this.metersoortenService.new(m)
+			.then(r => this.succuesNew());
+	}
+
+	succuesNew(): void {
+		$('body').prepend('<div class="alert alert-success alert-dismissable"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><strong>Success!</strong> The metersoort is added.</div>');
+		this.getMetersoorten();
 	}
 
 	succuesUpdate(): void {

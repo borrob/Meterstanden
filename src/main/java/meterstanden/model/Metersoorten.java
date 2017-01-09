@@ -31,6 +31,17 @@ public class Metersoorten {
 	 * The unit of this meter.
 	 */
 	private String unit;
+	
+	//-----------// CONSTRUCTORS //-----------//
+	public Metersoorten(){
+		super();
+	}
+	
+	public Metersoorten(String ms, String un){
+		super();
+		this.metersoort=ms;
+		this.unit=un;
+	}
 
 	//-----------// GETTER AND SETTERS //-----------//
 	
