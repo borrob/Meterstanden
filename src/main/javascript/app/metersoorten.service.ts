@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Headers, Http} from '@angular/http';
+import {Headers, Http, URLSearchParams} from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -19,6 +19,31 @@ export class MetersoortenService {
 			.then(response => response.json() as Metersoorten[])
 			.catch(this.handleError);
 	}
+
+	delete(id: number): Promise<any>{
+		let params = new URLSearchParams()
+		params.set('ms', id.toString());
+		return this.http.delete(this.metersoortenURL, {search: params})
+			.toPromise()
+			.catch(this.handleError);
+	}
+
+	update(data: Metersoorten): Promise<any>{
+		let headers = new Headers();
+		headers.append('Content-Type', 'application/json');
+		return this.http.post(this.metersoortenURL, data, {headers})
+			.toPromise()
+			.catch(this.handleError);
+	}
+
+	new(data: Metersoorten): Promise<any>{
+		let headers = new Headers();
+		headers.append('Content-Type', 'application/json');
+		return this.http.put(this.metersoortenURL, data, {headers})
+			.toPromise()
+			.catch(this.handleError);
+	}
+	
 	
 	private handleError(error: any): Promise<any> {
 		console.error('An error occurred', error); // for demo purposes only
