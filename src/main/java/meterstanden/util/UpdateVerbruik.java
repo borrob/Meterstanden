@@ -74,6 +74,12 @@ public class UpdateVerbruik {
 		}
 	}
 	
+	public static void updateMeterverbruik(Long m){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Meterstanden ms = session.get(Meterstanden.class, m);
+		updateMeterverbruik(ms);
+	}
+	
 	/**
 	 * Get the year and mont from the meterstand.
 	 * 

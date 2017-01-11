@@ -100,6 +100,13 @@ public class Meterstanden {
 	}
 
 	//-----------// METHODS //-----------//
+	public void copyFrom(Meterstanden m){
+		this.datum = m.getDatum();
+		this.waarde = m.getWaarde();
+		this.omschrijving = m.getOmschrijving();
+		this.metersoort = m.getMetersoort();
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
