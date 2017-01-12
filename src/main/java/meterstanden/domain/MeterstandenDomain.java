@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
-import org.hibernate.hql.internal.ast.tree.NullNode;
 
 import com.google.gson.Gson;
 

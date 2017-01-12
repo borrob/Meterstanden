@@ -5,7 +5,7 @@ CREATE TABLE "APP"."METERSTANDEN" (
 	datum date,
 	waarde float,
 	omschrijving varchar(255),
-	id_metersoort integer REFERENCES "APP"."METERSOORTEN" (id)
+	id_metersoort integer REFERENCES "APP"."METERSOORTEN" (id) ON DELETE CASCADE
 );
 
 insert INTO "APP"."METERSTANDEN" (

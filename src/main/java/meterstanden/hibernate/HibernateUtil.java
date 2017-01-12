@@ -106,6 +106,7 @@ public class HibernateUtil {
 			session.getTransaction().commit();
 			log.debug("Meterstand with id = " + Long.valueOf(id) + " is deleted.");
 		} catch (Exception e) {
+			session.getTransaction().rollback();
 			log.error("Could not delete meterstand. Got error: " + e.toString() + " for meterstand: " + Long.valueOf(id));
 			return false;
 		} finally {
@@ -123,6 +124,7 @@ public class HibernateUtil {
 			session.getTransaction().commit();
 			log.debug("Metersoort with id = " + Long.valueOf(id) + " is deleted.");
 		} catch (Exception e) {
+			session.getTransaction().rollback();
 			log.error("Could not delete Metersorot. Got error: " + e.toString() + " for metersoort: " + Long.valueOf(id));
 			return false;
 		} finally {
@@ -146,6 +148,7 @@ public class HibernateUtil {
 			session.getTransaction().commit();
 			log.info("New maandverbruik added: " + mv.toString());
 		} catch (Exception e) {
+			session.getTransaction().rollback();
 			log.error("Could not save maandverbruik, got error: " + e.toString());
 			return false;
 		} finally {
