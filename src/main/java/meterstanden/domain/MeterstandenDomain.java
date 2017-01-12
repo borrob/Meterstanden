@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.hql.internal.ast.tree.NullNode;
 
 import com.google.gson.Gson;
 
@@ -188,6 +189,16 @@ public class MeterstandenDomain extends HttpServlet {
 	    session.close();
 	    
 	    out.setMetersoort(ms);
+	    
+	    if (
+	    		out.getId()==null &&
+	    		out.getMetersoort()==null &&
+	    		out.getDatum()==null && 
+	    		out.getMetersoort()==null
+	    	){
+	    	log.error("Missing data for meterstanden.");
+	    	throw new ServletException("Missding data for meterstanden.");
+	    }
 	    return out;
 	}
 

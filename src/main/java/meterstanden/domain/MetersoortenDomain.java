@@ -46,7 +46,7 @@ public class MetersoortenDomain extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		List<Metersoorten> myMetersoorten = getMetersoorten("0");
+		List<Metersoorten> myMetersoorten = getMetersoorten();
 		
 		Gson gson = new Gson();
 		log.debug("The metersoorten JSON:");
@@ -126,35 +126,22 @@ public class MetersoortenDomain extends HttpServlet {
 	/**
 	 * Get the Metersoorten.
 	 * 
-	 * @param selectie ID of metersoort to get the Meterstanden from (0 = all)
 	 * @return The list of metersoorten
 	 */
 	@SuppressWarnings("unchecked")
-	private List<Metersoorten> getMetersoorten(String selectie){
+	private List<Metersoorten> getMetersoorten(){
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		
-		Long selectieInt = Long.valueOf(selectie);
-		Metersoorten metersoort = null;
-		boolean useSelection = selectieInt>0;
-		
 		String hql = "from Metersoorten m ";
-		if (useSelection){
-			hql += "where m.id = :metersoort ";
-		}
 		hql += "order by m.id asc";
-		
 		Query query = session.createQuery(hql);
-		if (useSelection){
-			query.setParameter("metersoort", metersoort);
-		}
 
 		List<?> rl = query.getResultList();
 		
 		session.close();
 
-		return (List<Metersoorten>) rl;
-		
+		return (List<Metersoorten>) rl;		
 	}
 	
 	private Metersoorten jsonToMetersoorten(HttpServletRequest request) throws ServletException{
@@ -172,6 +159,15 @@ public class MetersoortenDomain extends HttpServlet {
 	  	}
 		Gson gson = new Gson();
 	    out = gson.fromJson(jb.toString(), Metersoorten.class);
+	    
+	    if (
+	    		out.getId()==null &&
+	    		out.getMetersoort()==null &&
+	    		out.getUnit()==null
+	    	){
+	    	log.error("Missing data for metersoorten.");
+	    	throw new ServletException("Missding data for metersoorten.");
+	    }
 		
 	    return out;
 	}
