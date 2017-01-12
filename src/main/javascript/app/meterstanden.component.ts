@@ -60,6 +60,7 @@ import '../javascript_libs/jquery-3.1.1.min.js';
 				<button (click)="myMeterstanden[19] != null && goNext()" class="btn btn-primary"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></button>
 			</div>
 		</div>
+
 		<!-- Delete Meterstand Modal -->
 		<div class="modal fade" id="deleteMeterstandModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			<div class="modal-dialog" role="document">
@@ -80,7 +81,7 @@ import '../javascript_libs/jquery-3.1.1.min.js';
 		</div>
 
 		<!-- Update Meterstand  Modal -->
-		<div class="modal fade" id="updateMeterstandtModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal fade" id="updateMeterstandModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -251,7 +252,7 @@ export class MeterstandenComponent implements OnInit{
 			}
 		}
 		$('#updateDatefield').val(new Date(this.selectedMeterstand.datum).toISOString().substr(0,10));
-		$('#updateMeterstandtModal').modal();
+		$('#updateMeterstandModal').modal();
 	}
 
 	reallyUpdate(): void {
