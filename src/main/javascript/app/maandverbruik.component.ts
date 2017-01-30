@@ -31,7 +31,8 @@ import {MetersoortenService} from './metersoorten.service';
 							<td>{{m.jaar}}</td>
 							<td>{{m.maand}}</td>
 							<td *ngFor="let ms of m.mv">
-								{{ms.verbruik | number: '1.1-1'}} {{ms.metersoort.unit}}/maand
+								<span *ngIf="ms">{{ms.verbruik | number: '1.1-1'}} {{ms.metersoort.unit}}/maand</span>
+								<span *ngIf!="ms">--</span>
 							</td>
 						</tr>
 					</tbody>
