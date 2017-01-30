@@ -92,6 +92,12 @@ public class HibernateUtil {
 		return true;
 	}
 	
+	/**
+	 * Update the meterstand with this one
+	 * 
+	 * @param m the meterstand to be updated
+	 * @return true if succes
+	 */
 	public static boolean updateMeterstand(Meterstanden m){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
@@ -135,6 +141,12 @@ public class HibernateUtil {
 		return true;
 	}
 	
+	/**
+	 * Persist a metersroot into the database.
+	 * 
+	 * @param m the new metersoort m
+	 * @return true if success
+	 */
 	public static boolean persistMetersoort(Metersoorten m){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try{
@@ -152,6 +164,12 @@ public class HibernateUtil {
 		return true;
 	}
 	
+	/**
+	 * Update the metersoort with this one.
+	 * 
+	 * @param m the metersoort to be updated
+	 * @return true if succes
+	 */
 	public static boolean updateMetersoort(Metersoorten m){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 	    try {
@@ -171,6 +189,12 @@ public class HibernateUtil {
 	    return true;
 	}
 	
+	/**
+	 * Delete metersoort
+	 * 
+	 * @param id the id of the metersoort to be deleted
+	 * @return true if succes
+	 */
 	public static boolean deleteMetersoort(Long id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
@@ -196,7 +220,6 @@ public class HibernateUtil {
 	 * @return true if succes, false if failure
 	 */
 	public static boolean persistMaandverbruik(Maandverbruik mv){
-		//TODO: javadoc
 		Session session = getSessionFactory().openSession();
 		try{
 			session.beginTransaction();
@@ -220,7 +243,6 @@ public class HibernateUtil {
 	 * @return true if succes, false if failure
 	 */
 	public static boolean deleteMaandverbruik(Long id){
-		//TODO: javadoc
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();

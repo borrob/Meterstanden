@@ -74,6 +74,11 @@ public class UpdateVerbruik {
 		}
 	}
 	
+	/**
+	 * Update the meterverbruik based on this meterstand
+	 * 
+	 * @param m the id of the meterstand
+	 */
 	public static void updateMeterverbruik(Long m){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Meterstanden ms = session.get(Meterstanden.class, m);

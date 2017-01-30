@@ -40,6 +40,9 @@ public class Maandverbruik extends HttpServlet {
     }
 
 	/**
+	 * Get the maandverbruik for a specific year and metersoort.
+	 * 
+	 * The year and metersoort have to be inside the request attributes.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -75,6 +78,13 @@ public class Maandverbruik extends HttpServlet {
 	 * PRIVATE METHODS
 	**************************************************************************/
 	
+	/**
+	 * Get the maandverbruik as a list
+	 * 
+	 * @param ms the metersoort to get the verbruik for
+	 * @param year the selected year
+	 * @return a list of the maandverbruiken
+	 */
 	private List<?> getMaandverbruik(Long ms, int year){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Metersoorten metersoort = session.get(Metersoorten.class, ms);

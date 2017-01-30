@@ -43,6 +43,7 @@ public class MeterstandenDomain extends HttpServlet {
     }
 
 	/**
+	 * Get the last 20 meterstanden (optional for a metersoort).
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -61,6 +62,8 @@ public class MeterstandenDomain extends HttpServlet {
 	}
 
 	/**
+	 * Update a meterstand,
+	 * 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -83,6 +86,8 @@ public class MeterstandenDomain extends HttpServlet {
 	}
 	
 	/**
+	 * Add a new meterstand.
+	 * 
 	 * @see HttpServlet#doPut(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -104,6 +109,8 @@ public class MeterstandenDomain extends HttpServlet {
 	}
 	
 	/**
+	 * Delete a meterstand.
+	 * 
 	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -165,6 +172,13 @@ public class MeterstandenDomain extends HttpServlet {
 		
 	}
 	
+	/**
+	 * Convert a JSON to meterstanden object
+	 * 
+	 * @param request the http-request with the json as parameter
+	 * @return the input json as a meterstanden object
+	 * @throws ServletException when something went wrong.
+	 */
 	private Meterstanden jsonToMeterstanden(HttpServletRequest request) throws ServletException{
 		Meterstanden out;
 		

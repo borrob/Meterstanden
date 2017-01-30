@@ -54,6 +54,13 @@ public class MonthList {
 		return "MonthList [jaar=" + jaar + ", maand=" + maand + ", mv=" + mv + "]";
 	}
 	
+	/**
+	 * Get a MonthList object with all maandverbruiken for year y and maand m
+	 * 
+	 * @param y the selected year
+	 * @param m the selected month
+	 * @return a Monthlist with all maandverbruiken
+	 */
 	public static MonthList fillMonth(int y, int m){
 		MonthList result = new MonthList();
 		

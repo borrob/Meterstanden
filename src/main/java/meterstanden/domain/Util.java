@@ -23,7 +23,14 @@ import main.java.meterstanden.hibernate.HibernateUtil;
 /**
  * Servlet implementation class Util
  */
-@WebServlet({ "/Util", "/util", "/UTIL" })
+@WebServlet(
+		description = "REST interface for meterstanden.",
+		urlPatterns = {
+				"/Util",
+				"/util",
+				"/UTIL" 
+		}
+	)
 public class Util extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(Util.class);
@@ -37,6 +44,8 @@ public class Util extends HttpServlet {
     }
 
 	/**
+	 * Get the distinct jaren for the maandverbruiken
+	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -64,6 +73,11 @@ public class Util extends HttpServlet {
 	 * PRIVATE METHODS
 	**************************************************************************/
 	
+	/**
+	 * Get a list of the distinct jaren of maandverbruiken.
+	 * 
+	 * @return
+	 */
 	private List<?> getDistinctJaren(){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		StringBuffer hql = new StringBuffer();
@@ -76,6 +90,12 @@ public class Util extends HttpServlet {
 		return rl;
 	}
 	
+	/**
+	 * Make a hashmap of the jaren
+	 * 
+	 * @param rl the resultlist with the distinct jaren
+	 * @return a hashmap <String, Integer> as key-value pare for "jaar" = xxxx
+	 */
 	private List<HashMap<String, Integer>> maanverbruikJaarToHashMap(List<?> rl){
 		List<HashMap<String, Integer>> map = new ArrayList<HashMap<String, Integer>>();
 		

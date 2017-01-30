@@ -42,6 +42,8 @@ public class MetersoortenDomain extends HttpServlet {
     }
 
 	/**
+	 * Get the metersoorten from the database.
+	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -55,6 +57,7 @@ public class MetersoortenDomain extends HttpServlet {
 	}
 
 	/**
+	 * Update a metersoort from the inputparameters.
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -69,6 +72,8 @@ public class MetersoortenDomain extends HttpServlet {
 	}
 	
 	/**
+	 * Add a new metersoort from the input parameters.
+	 * 
 	 * @see HttpServlet#doPut(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -83,6 +88,8 @@ public class MetersoortenDomain extends HttpServlet {
 	}
 	
 	/**
+	 * Delete a metersoort
+	 * 
 	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -128,6 +135,13 @@ public class MetersoortenDomain extends HttpServlet {
 		return (List<Metersoorten>) rl;		
 	}
 	
+	/**
+	 * Convert a json to metersoorten object
+	 * 
+	 * @param request a request including the json with the metersoort
+	 * @return the metersoort converted from the json
+	 * @throws ServletException when something went wrong
+	 */
 	private Metersoorten jsonToMetersoorten(HttpServletRequest request) throws ServletException{
 		Metersoorten out;
 		

@@ -40,6 +40,8 @@ public class OverzichtMaandverbruik extends HttpServlet {
     }
 
 	/**
+	 * Get the maandverbruiken for page p
+	 * (20 items on a page).
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -72,6 +74,14 @@ public class OverzichtMaandverbruik extends HttpServlet {
 	 * PRIVATE METHODS
 	**************************************************************************/
 	
+	/**
+	 * Get a list of the maandverbruiken for page p
+	 * 
+	 * (20 items per page).
+	 * 
+	 * @param p the page number
+	 * @return a list of maandverbruiken
+	 */
 	private List<?> getMaandverbruiken(int p){
 		Session session = HibernateUtil.getSessionFactory().openSession();	
 		
