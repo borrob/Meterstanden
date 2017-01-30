@@ -63,19 +63,8 @@ public class MetersoortenDomain extends HttpServlet {
 		//read post data from json
 		Metersoorten m = jsonToMetersoorten(request);
 		
-	    //persisting in database
-	    Session session = HibernateUtil.getSessionFactory().openSession();
-	    try {
-		    Metersoorten mOld = session.get(Metersoorten.class, m.getId());
-		    mOld.copyFrom(m);
-		    session.beginTransaction();
-		    session.update(mOld);
-		    session.getTransaction().commit();
-	    } catch (Exception e) {
-	    	log.error("Trying to update metersoort, but get error: " + e.toString());
-	  		throw new ServletException("Error with updating metersoort: " + e.toString());
-	    } finally {
-	    	session.close();
+	    if (!HibernateUtil.updateMetersoort(m)){
+	    	throw new ServletException("Error with updating metersoort.");
 	    }
 	}
 	
@@ -88,17 +77,8 @@ public class MetersoortenDomain extends HttpServlet {
 		//read post data from json
 		Metersoorten m = jsonToMetersoorten(request);
 		
-	    //persisting in database
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		try{
-			session.beginTransaction();
-			session.save(m);
-			session.getTransaction().commit();
-			log.info("New metersoort added.");
-		} catch (Exception e) {
-			log.error("Could not save metersoort, got error: " + e.toString());
-		} finally {
-			session.close();
+		if (!HibernateUtil.persistMetersoort(m)){
+			throw new ServletException("Error with adding new metersoort");
 		}
 	}
 	
@@ -122,6 +102,10 @@ public class MetersoortenDomain extends HttpServlet {
 			throw new ServletException("Error on deleting metersoort: " + e.toString());
 		} 
 	}
+	
+	/**************************************************************************
+	 * PRIVATE METHODS
+	**************************************************************************/
 	
 	/**
 	 * Get the Metersoorten.
@@ -164,7 +148,7 @@ public class MetersoortenDomain extends HttpServlet {
 	    		out.getId()==null &&
 	    		out.getMetersoort()==null &&
 	    		out.getUnit()==null
-	    	){
+	    ){
 	    	log.error("Missing data for metersoorten.");
 	    	throw new ServletException("Missding data for metersoorten.");
 	    }

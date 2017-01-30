@@ -43,18 +43,10 @@ public class Util extends HttpServlet {
 		if (request.getParameter("q").equalsIgnoreCase("maandverbruikjaar"))
 		{
 			log.debug("getting maandverbruik_jaar");
-			Session session = HibernateUtil.getSessionFactory().openSession();
-			StringBuffer hql = new StringBuffer();
-			hql.append("select distinct m.jaar as jaar from Maandverbruik m");
-			hql.append(" order by m.jaar desc");
-			
-			Query q = session.createQuery(hql.toString());
-			List<?> rl = q.getResultList();
-			session.close();
-				
+			List<?> rl = getDistinctJaren();
 			List<HashMap<String, Integer>> map = maanverbruikJaarToHashMap(rl);
+			
 			Gson gson = new Gson();
-			log.debug(gson.toJson(map));
 			response.getWriter().append(gson.toJson(map));
 		} else {
 			response.getWriter().append("Missing paramters.");
@@ -66,6 +58,22 @@ public class Util extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
+	}
+	
+	/**************************************************************************
+	 * PRIVATE METHODS
+	**************************************************************************/
+	
+	private List<?> getDistinctJaren(){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		StringBuffer hql = new StringBuffer();
+		hql.append("select distinct m.jaar as jaar from Maandverbruik m");
+		hql.append(" order by m.jaar desc");
+		
+		Query q = session.createQuery(hql.toString());
+		List<?> rl = q.getResultList();
+		session.close();
+		return rl;
 	}
 	
 	private List<HashMap<String, Integer>> maanverbruikJaarToHashMap(List<?> rl){

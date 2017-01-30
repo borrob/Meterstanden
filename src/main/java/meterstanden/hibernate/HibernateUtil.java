@@ -83,7 +83,27 @@ public class HibernateUtil {
 			session.getTransaction().commit();
 			log.info("New meterstand added.");
 		} catch (Exception e) {
+			session.getTransaction().rollback();
 			log.error("Could not save meterstand, got error: " + e.toString() + "for meterstand: " + ms.toString());
+			return false;
+		} finally {
+			session.close();
+		}
+		return true;
+	}
+	
+	public static boolean updateMeterstand(Meterstanden m){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			Meterstanden mOld = session.get(Meterstanden.class, m.getId());
+		    mOld.copyFrom(m);
+		    session.beginTransaction();
+		    session.update(mOld);
+		    session.getTransaction().commit();
+		    log.debug("Updated meterstand: " + Long.toString(mOld.getId()));
+		} catch(Exception e){
+			session.getTransaction().rollback();
+			log.error("Could not update meterstand, got error: " + e.toString());
 			return false;
 		} finally {
 			session.close();
@@ -113,6 +133,42 @@ public class HibernateUtil {
 			session.close();
 		}
 		return true;
+	}
+	
+	public static boolean persistMetersoort(Metersoorten m){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try{
+			session.beginTransaction();
+			session.save(m);
+			session.getTransaction().commit();
+			log.info("New metersoort added.");
+		} catch (Exception e) {
+			session.getTransaction().rollback();
+			log.error("Could not save metersoort, got error: " + e.toString());
+			return false;
+		} finally {
+			session.close();
+		}
+		return true;
+	}
+	
+	public static boolean updateMetersoort(Metersoorten m){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+	    try {
+		    Metersoorten mOld = session.get(Metersoorten.class, m.getId());
+		    mOld.copyFrom(m);
+		    session.beginTransaction();
+		    session.update(mOld);
+		    session.getTransaction().commit();
+		    log.debug("Metersoort " + Long.toString(m.getId()) + " is updated.");
+	    } catch (Exception e) {
+	    	session.getTransaction().rollback();
+	    	log.error("Trying to update metersoort, but get error: " + e.toString());
+	    	return false;
+	    } finally {
+	    	session.close();
+	    }
+	    return true;
 	}
 	
 	public static boolean deleteMetersoort(Long id){
@@ -173,6 +229,7 @@ public class HibernateUtil {
 			session.getTransaction().commit();
 			log.debug("Maandverbruik with id = " + Long.valueOf(id) + " is deleted.");
 		} catch (Exception e) {
+			session.getTransaction().rollback();
 			log.error("Could not delete maandverbruik. Got error: " + e.toString());
 			return false;
 		} finally {

@@ -48,7 +48,31 @@ public class OverzichtMaandverbruik extends HttpServlet {
 				0;
 		
 		List<MonthList> ml_overviewList = new ArrayList<MonthList>();
+		List<?> maandverbruikenList = getMaandverbruiken(p);
+		Iterator<?> maandverbruikenIt = maandverbruikenList.iterator();
 		
+		while (maandverbruikenIt.hasNext()){
+			Object[] mj = (Object[]) maandverbruikenIt.next();
+			MonthList ml_overview = MonthList.fillMonth((int)mj[1], (int)mj[0]);
+			ml_overviewList.add(ml_overview);
+		}
+		
+		Gson gson = new Gson();
+		response.getWriter().append(gson.toJson(ml_overviewList));
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+	
+	/**************************************************************************
+	 * PRIVATE METHODS
+	**************************************************************************/
+	
+	private List<?> getMaandverbruiken(int p){
 		Session session = HibernateUtil.getSessionFactory().openSession();	
 		
 		StringBuilder hql = new StringBuilder();
@@ -59,26 +83,9 @@ public class OverzichtMaandverbruik extends HttpServlet {
 		qMaandverbruiken.setMaxResults(20);
 		qMaandverbruiken.setFirstResult(20 * p);
 		List<?> maandverbruikenList = qMaandverbruiken.getResultList();
-		Iterator<?> maandverbruikenIt = maandverbruikenList.iterator();
 		
 		session.close();
 		
-		while (maandverbruikenIt.hasNext()){
-			Object[] mj = (Object[]) maandverbruikenIt.next();
-			MonthList ml_overview = MonthList.fillMonth((int)mj[1], (int)mj[0]);
-			ml_overviewList.add(ml_overview);
-		}
-		
-		Gson gson = new Gson();
-		response.getWriter().append(gson.toJson(ml_overviewList));
-	
+		return maandverbruikenList;
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
-
 }

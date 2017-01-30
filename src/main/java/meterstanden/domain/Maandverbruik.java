@@ -57,21 +57,7 @@ public class Maandverbruik extends HttpServlet {
 			throw new ServletException("missing parameters");
 		}
 		
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Metersoorten metersoort = session.get(Metersoorten.class, ms);
-		
-		StringBuilder hql = new StringBuilder();
-		hql.append("from Maandverbruik m");
-		hql.append(" where m.metersoort = :myMeter");
-		hql.append(" and m.jaar = :myYear");
-		hql.append(" order by m.maand asc");
-		Query q = session.createQuery(hql.toString());
-		q.setParameter("myMeter", metersoort);
-		q.setParameter("myYear", year);
-		
-		List<?> rl = q.getResultList();
-		
-		session.close();
+		List<?> rl = getMaandverbruik(ms, year);
 		
 		Gson gson = new Gson();
 		response.getWriter().append(gson.toJson(rl));
@@ -83,6 +69,30 @@ public class Maandverbruik extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+	}
+	
+	/**************************************************************************
+	 * PRIVATE METHODS
+	**************************************************************************/
+	
+	private List<?> getMaandverbruik(Long ms, int year){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Metersoorten metersoort = session.get(Metersoorten.class, ms);
+		
+		StringBuilder hql = new StringBuilder();
+		hql.append("from Maandverbruik m");
+		hql.append(" where m.metersoort = :myMeter");
+		hql.append(" and m.jaar = :myYear");
+		hql.append(" order by m.maand asc");
+		
+		Query q = session.createQuery(hql.toString());
+		q.setParameter("myMeter", metersoort);
+		q.setParameter("myYear", year);
+		List<?> rl = q.getResultList();
+	
+		session.close();
+		
+		return rl;
 	}
 
 }

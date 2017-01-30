@@ -70,19 +70,15 @@ public class MeterstandenDomain extends HttpServlet {
 		Meterstanden m = jsonToMeterstanden(request);
 		
 		//persist in database and update maandverbruik
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Meterstanden mOld = session.get(Meterstanden.class, m.getId());
-	    mOld.copyFrom(m);
-	    session.beginTransaction();
-	    session.update(mOld);
-	    session.getTransaction().commit();
-	    session.close();
-	    
-		try {
-			UpdateVerbruik.updateMeterverbruik(m);
-			//todo: fix update meterverbruik when metersoort changes
-		} catch (IndexOutOfBoundsException ignoreException) {
-			log.error("Could not determine meterstandverbruik.");
+		if(HibernateUtil.updateMeterstand(m)){
+			try {
+				UpdateVerbruik.updateMeterverbruik(m);
+				//todo: fix update meterverbruik when metersoort changes
+			} catch (IndexOutOfBoundsException ignoreException) {
+				log.error("Could not determine meterstandverbruik.");
+			}
+		} else {
+			throw new ServletException("Error with updating meterstand.");
 		}
 	}
 	
@@ -103,8 +99,7 @@ public class MeterstandenDomain extends HttpServlet {
 				log.error("Could not determine meterstandverbruik.");
 			}
 		} else {
-			//error with persisingMeterstand
-			log.error("Could not save meterstand: " + m.toString());
+			throw new ServletException("Could not add meterstand.");
 		}
 	}
 	
@@ -122,13 +117,16 @@ public class MeterstandenDomain extends HttpServlet {
 
 		try {
 			HibernateUtil.deleteMeterstand(ms);
-			log.debug("Metersoort with id = " + Long.valueOf(ms) + " is deleted.");
 		} catch (Exception e) {
 			log.error("Could not delete metersoort. Got error: " + e.toString() + " for metersoort: " + Long.valueOf(ms));
 			throw new ServletException("Error on deleting metersoort: " + e.toString());
 		}
 		//TODO update maandverbruik
 	}
+	
+	/**************************************************************************
+	 * PRIVATE METHODS
+	**************************************************************************/
 	
 	/**
 	 * Get the last 20 Meterstanden.
