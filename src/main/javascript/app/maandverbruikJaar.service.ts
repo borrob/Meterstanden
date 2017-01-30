@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Headers, Http, URLSearchParams} from '@angular/http';
 
 import {MaandverbruikJaar} from './maandverbruikJaar';
+import {Settings} from './settings';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -9,8 +10,7 @@ import 'rxjs/add/operator/toPromise';
 export class MaandverbruikJaarService {
 
 	private headers = new Headers({'Content-Type': 'application/json'});
-	private maandverbruikURL = 'http://localhost:8080/meterstanden/util';
-	
+	private maandverbruikURL = Settings.maandverbruikUtilURL;
 	constructor(private http: Http) {}
 	
 	getMaandverbruikjaren(): Promise<MaandverbruikJaar[]> {

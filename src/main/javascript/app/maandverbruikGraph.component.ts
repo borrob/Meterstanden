@@ -7,6 +7,8 @@ import {MetersoortenService} from './metersoorten.service';
 import {MaandverbruikJaar} from './maandverbruikjaar';
 import {MaandverbruikJaarService} from './maandverbruikJaar.service';
 
+import {Settings} from './settings';
+
 declare var Chart: any;
 import '../javascript_libs/Chart.min.js';
 
@@ -125,9 +127,9 @@ export class MaandverbruikGraphComponent implements OnInit{
 				data: this.myDrawData1,
 				borderWidth: 1,
 				pointRadius: 5,
-				pointBackgroundColor: 'rgb(10,10,10)',
-				backgroundColor: 'rgba(10,10,10,0.2)',
-				pointBorderColor: "rgb(10,10,10)"
+				pointBackgroundColor: Settings.color1,
+				backgroundColor: Settings.color1transparent,
+				pointBorderColor: Settings.color1
 			});
 		}
 		if (this.myMaandverbruik2[0]){
@@ -136,9 +138,9 @@ export class MaandverbruikGraphComponent implements OnInit{
 				data: this.myDrawData2,
 				borderWidth: 1,
 				pointRadius: 5,
-				pointBackgroundColor: 'rgb(0,0,200)',
-				backgroundColor: 'rgba(0,0,200,0.2)',
-				pointBorderColor: "rgb(0,0,200)"
+				pointBackgroundColor: Settings.color2,
+				backgroundColor: Settings.color2transparent,
+				pointBorderColor: Settings.color2
 			});
 		}
 		if (this.myMaandverbruik3[0]){
@@ -147,14 +149,14 @@ export class MaandverbruikGraphComponent implements OnInit{
 				data: this.myDrawData3,
 				borderWidth: 1,
 				pointRadius: 5,
-				pointBackgroundColor: 'rgb(0,200,0)',
-				backgroundColor: 'rgba(0,200,0,0.2)',
-				pointBorderColor: "rgb(0,200,0)"
+				pointBackgroundColor: Settings.color3,
+				backgroundColor: Settings.color3transparent,
+				pointBorderColor: Settings.color3
 			});
 		}
 
 		var myData = {
-			labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+			labels: Settings.graphXlabel,
 			datasets: datasets
 		};
 

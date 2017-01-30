@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Headers, Http, URLSearchParams} from '@angular/http';
+import {Settings} from './settings';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -9,7 +10,7 @@ import {MaandverbruikOverzicht} from './maandverbruikOverzicht';
 export class MaandverbruikOverzichtService {
 
 	private headers = new Headers({'Content-Type': 'application/json'});
-	private overzichtmaandverbruikURL = 'http://localhost:8080/meterstanden/overzichtmaandverbruik';
+	private overzichtmaandverbruikURL = Settings.overzichtmaandverbruikURL;
 	
 	constructor(private http: Http) {}
 	

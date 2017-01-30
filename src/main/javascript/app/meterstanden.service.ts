@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Headers, Http, URLSearchParams} from '@angular/http';
+import {Settings} from './settings';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -9,7 +10,7 @@ import {Meterstanden} from './meterstanden';
 export class MeterstandenService {
 
 	private headers = new Headers({'Content-Type': 'application/json'});
-	private meterstandenURL = 'http://localhost:8080/meterstanden/meterstanden';
+	private meterstandenURL = Settings.meterstandenURL;
 	
 	constructor(private http: Http) {}
 	
