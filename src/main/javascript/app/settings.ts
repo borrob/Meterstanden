@@ -9,7 +9,7 @@ export class Settings {
 	public static readonly color1='rgb(10,10,10)';
 	public static readonly color1transparent='rgba(10,10,10,0.2)';
 	public static readonly color2='rgb(0,0,200)';
-	public static readonly color2transparent='rgba(0,0,0,200.2)';
+	public static readonly color2transparent='rgba(0,0,200,0.2)';
 	public static readonly color3='rgb(0,200,0)';
 	public static readonly color3transparent='rgba(0,200,0,0.2)';
 
