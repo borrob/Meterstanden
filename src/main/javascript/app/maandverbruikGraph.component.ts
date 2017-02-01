@@ -46,7 +46,7 @@ import '../javascript_libs/Chart.min.js';
 			</div>
 			<div class="row">
 				<div class="col-xs-12">
-					><canvas id="myChart" width="200px" height="100px"></canvas>
+					<canvas id="myChart" width="200px" height="100px"></canvas>
 				</div>
 			</div>
 		`
@@ -179,9 +179,13 @@ export class MaandverbruikGraphComponent implements OnInit{
 	}
 
 	maandverbruikToData(mv:Maandverbruik[]):number[]{
-		var out = [];
-		for (var m in mv){
-			out.push(mv[m].verbruik);
+		let out = Array.apply(null, Array(12)).map(function () {});
+		for (let m in mv){
+			if(mv[m]){
+				out.splice(mv[m].maand-1, 0, mv[m].verbruik);
+			} else {
+				out.push(null);
+			}
 		}
 		return out;
 	}
