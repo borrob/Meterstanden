@@ -10,6 +10,7 @@ import org.hibernate.service.ServiceRegistry;
 import main.java.meterstanden.model.Maandverbruik;
 import main.java.meterstanden.model.Metersoorten;
 import main.java.meterstanden.model.Meterstanden;
+import main.java.meterstanden.util.UpdateVerbruik;
 
 /**
  * @author rob
@@ -131,6 +132,9 @@ public class HibernateUtil {
 			session.delete("Meterstanden", ms);
 			session.getTransaction().commit();
 			log.debug("Meterstand with id = " + Long.valueOf(id) + " is deleted.");
+			
+			//update the maandverbruik
+			UpdateVerbruik.updateMeterverbruikNaDelete(ms);
 		} catch (Exception e) {
 			session.getTransaction().rollback();
 			log.error("Could not delete meterstand. Got error: " + e.toString() + " for meterstand: " + Long.valueOf(id));

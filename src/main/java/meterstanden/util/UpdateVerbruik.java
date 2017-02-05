@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
@@ -83,6 +84,35 @@ public class UpdateVerbruik {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Meterstanden ms = session.get(Meterstanden.class, m);
 		updateMeterverbruik(ms);
+	}
+	
+	public static void updateMeterverbruikNaDelete(Meterstanden ms){
+		updateAfterDelete(ms,true);
+		updateAfterDelete(ms,false);
+	}
+	
+	private static void updateAfterDelete(Meterstanden ms, boolean before ){
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		StringBuilder hql = new StringBuilder();
+		hql.append("from Meterstanden m");
+		if (before){
+			hql.append(" where m.datum < :myDatum");
+			hql.append(" order by m.datum desc");
+		} else {
+			hql.append(" where m.datum > :myDatum");
+			hql.append(" order by m.datum asc");
+		}
+		Query q = session.createQuery(hql.toString());
+		q.setParameter("myDatum", ms.getDatum());
+		q.setMaxResults(1);
+		try {
+			Meterstanden msUpdate = (Meterstanden)q.getSingleResult();
+			updateMeterverbruik(msUpdate);
+		} catch (IndexOutOfBoundsException|NoResultException ignore){
+			//minding my own business
+		} finally {
+			session.close();
+		}
 	}
 	
 	/**

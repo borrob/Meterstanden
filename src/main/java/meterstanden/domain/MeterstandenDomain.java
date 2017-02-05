@@ -116,7 +116,7 @@ public class MeterstandenDomain extends HttpServlet {
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Long ms;
 		if (request.getParameterMap().containsKey("ms")){
-			ms = Long.valueOf(request.getParameter("ms"));
+			ms = Long.valueOf(request.getParameter("ms")); 
 		} else {
 			log.error("Deleting meterstand, but no parameters were given.");
 			throw new ServletException("missing parameters");
@@ -128,7 +128,6 @@ public class MeterstandenDomain extends HttpServlet {
 			log.error("Could not delete metersoort. Got error: " + e.toString() + " for metersoort: " + Long.valueOf(ms));
 			throw new ServletException("Error on deleting metersoort: " + e.toString());
 		}
-		//TODO update maandverbruik
 	}
 	
 	/**************************************************************************
