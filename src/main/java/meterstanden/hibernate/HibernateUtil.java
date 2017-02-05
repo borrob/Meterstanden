@@ -103,13 +103,11 @@ public class HibernateUtil {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			Meterstanden mOld = session.get(Meterstanden.class, m.getId());
-		    mOld.copyFrom(m);
-		    session.beginTransaction();
-		    session.update(mOld);
-		    session.getTransaction().commit();
-		    log.debug("Updated meterstand: " + Long.toString(mOld.getId()));
+			Meterstanden mNieuw = new Meterstanden();
+			mNieuw.copyFrom(m);
+			deleteMeterstand(mOld.getId());
+			persistMeterstand(mNieuw);
 		} catch(Exception e){
-			session.getTransaction().rollback();
 			log.error("Could not update meterstand, got error: " + e.toString());
 			return false;
 		} finally {
@@ -135,6 +133,8 @@ public class HibernateUtil {
 			
 			//update the maandverbruik
 			UpdateVerbruik.updateMeterverbruikNaDelete(ms);
+		} catch (IndexOutOfBoundsException ignore) {
+			//pass
 		} catch (Exception e) {
 			session.getTransaction().rollback();
 			log.error("Could not delete meterstand. Got error: " + e.toString() + " for meterstand: " + Long.valueOf(id));

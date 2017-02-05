@@ -95,14 +95,16 @@ public class UpdateVerbruik {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		StringBuilder hql = new StringBuilder();
 		hql.append("from Meterstanden m");
+		hql.append(" where m.metersoort = :myMetersoort");
 		if (before){
-			hql.append(" where m.datum < :myDatum");
+			hql.append(" and m.datum < :myDatum");
 			hql.append(" order by m.datum desc");
 		} else {
-			hql.append(" where m.datum > :myDatum");
+			hql.append(" and m.datum > :myDatum");
 			hql.append(" order by m.datum asc");
 		}
 		Query q = session.createQuery(hql.toString());
+		q.setParameter("myMetersoort", ms.getMetersoort());
 		q.setParameter("myDatum", ms.getDatum());
 		q.setMaxResults(1);
 		try {
