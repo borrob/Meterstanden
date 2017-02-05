@@ -7,6 +7,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import main.java.meterstanden.model.Jaarverbruik;
 import main.java.meterstanden.model.Maandverbruik;
 import main.java.meterstanden.model.Metersoorten;
 import main.java.meterstanden.model.Meterstanden;
@@ -51,6 +52,7 @@ public class HibernateUtil {
 			config.addAnnotatedClass(Metersoorten.class);
 			config.addAnnotatedClass(Meterstanden.class);
 			config.addAnnotatedClass(Maandverbruik.class);
+			config.addAnnotatedClass(Jaarverbruik.class);
 			
 			sr = new StandardServiceRegistryBuilder().applySettings(
 		            config.getProperties()).build();
