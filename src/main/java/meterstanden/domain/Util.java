@@ -49,14 +49,24 @@ public class Util extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (request.getParameter("q").equalsIgnoreCase("maandverbruikjaar"))
-		{
+		if (request.getParameter("q").equalsIgnoreCase("maandverbruikjaar")){
 			log.debug("getting maandverbruik_jaar");
 			List<?> rl = getDistinctJaren();
 			List<HashMap<String, Integer>> map = maanverbruikJaarToHashMap(rl);
 			
 			Gson gson = new Gson();
 			response.getWriter().append(gson.toJson(map));
+		} else if (request.getParameter("q").equalsIgnoreCase("jaarverbruik")){
+			log.debug("Getting the jaarverbruik.");
+			Session session = HibernateUtil.getSessionFactory().openSession();
+			StringBuilder hql = new StringBuilder();
+			hql.append("from Jaarverbruik");
+			Query q = session.createQuery(hql.toString());
+			List<?> rl = q.getResultList();
+			
+			Gson gson = new Gson();
+			response.getWriter().append(gson.toJson(rl));
+
 		} else {
 			response.getWriter().append("Missing paramters.");
 		}
