@@ -29,7 +29,7 @@ import {MetersoortenService} from './metersoorten.service';
 						<tr *ngFor="let m of overzicht">
 							<td>{{m.jaar}}</td>
 							<td *ngFor="let ms of m.meter">
-								{{ms.verbruik}}
+								{{ms.formatted}}
 							</td>
 						</tr>
 					</tbody>
@@ -46,7 +46,7 @@ export class JaarverbruikComponent implements OnInit {
 	) {};
 
 	myJaarverbruikOverzicht: Jaarverbruik[];
-	overzicht: Overzicht[] = [new Overzicht()];
+	overzicht: Overzicht[] = [new Overzicht(null)];
 	myMetersoorten: Metersoorten[];
 
 	getJaarverbruik(): void {
@@ -60,33 +60,25 @@ export class JaarverbruikComponent implements OnInit {
 
 	procesJaar(jvo: Jaarverbruik[]): void {
 		for (let r of jvo){
-			let m = new Mv();
-			m.metersoort = r.ms;
-			m.verbruik = r.som;
+			let m = new Mv(r.ms, r.som, null);
 			let found = false;
 			for(let o of this.overzicht){
 				if(o.jaar == r.jaar){
 					o.updateMeter(m);
-					//o.meter.splice(0,0,m);
 					found = true;
 					break;
 				}
 			}
 			if (!found){
-				let ov = new Overzicht();
-				ov.jaar = r.jaar;
-				ov.meter = [new Mv];
+				let ov = new Overzicht(r.jaar);
 				for(let msoorten of this.myMetersoorten){
-					let newMv = new Mv();
-					newMv.metersoort = msoorten.metersoort;
-					ov.meter.splice(0,0,newMv);
+					let newMv = new Mv(msoorten.metersoort, null, msoorten.unit);
+					ov.meter.splice(ov.meter.length,0,newMv);
 				}
 				ov.updateMeter(m);
-				//ov.meter = [m];
 				this.overzicht.splice(0,0,ov);
 			}
 		}
-		console.log(this.overzicht);
 	}
 
 	getMetersoorten(): void {
@@ -105,22 +97,16 @@ export class Overzicht {
 	jaar: number;
 	meter: Mv[];
 
-	getMeter = function(msoort: string): Mv{
-		if (this.meter){
-			for(let m of this.meter){
-				if (m.metersoort == msoort){
-					return m;
-				}
-			}
-			return new Mv();
-		}
-		return new Mv();
+	constructor(j: number){
+		this.jaar = j;
+		this.meter = [];
 	}
 
 	updateMeter = function(m: Mv): void{
 		for (let meter of this.meter){
 			if(meter.metersoort == m.metersoort){
 				meter.verbruik = m.verbruik;
+				meter.doFormat();
 			}
 		}
 	}
@@ -129,4 +115,17 @@ export class Overzicht {
 export class Mv {
 	metersoort: string;
 	verbruik: number;
+	unit: string;
+	formatted: string;
+
+	constructor(m: string, v: number, u: string){
+		this.metersoort = m;
+		this.verbruik = v;
+		this.unit = u;
+	}
+
+	doFormat = function():void{
+		this.formatted = Number(parseFloat(this.verbruik).toFixed(0)).toLocaleString() + " " + this.unit + "/jaar";
+	}
+
 }
