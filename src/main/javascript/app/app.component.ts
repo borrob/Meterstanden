@@ -11,6 +11,7 @@ import {Component} from '@angular/core';
 			<a routerLink="/maandverbruik">Maandverbruik</a>
 			<a routerLink="/jaarverbruik">Jaarverbruik</a>
 			<a routerLink="/maandverbruikgraph">MaandverbruikGraph</a>
+			<a routerLink="/jaarverbruikgraph">JaarverbruikGraph</a>
 		</nav>
 		<router-outlet></router-outlet>
 		`

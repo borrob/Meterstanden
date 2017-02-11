@@ -17,6 +17,7 @@ import {MaandverbruikOverzichtService} from './maandverbruikOverzicht.service';
 import {MaandverbruikJaarService} from './maandverbruikJaar.service';
 import {JaarverbruikComponent} from './jaarverbruik.component';
 import {JaarverbruikService} from './jaarverbruik.service';
+import {JaarverbruikGraphComponent} from './jaarverbruikGraph.component';
 
 @NgModule({
 	imports: [
@@ -31,7 +32,8 @@ import {JaarverbruikService} from './jaarverbruik.service';
 		MetersoortenComponent,
 		MaandverbruikComponent,
 		JaarverbruikComponent,
-		MaandverbruikGraphComponent
+		MaandverbruikGraphComponent,
+		JaarverbruikGraphComponent
 	],
 	providers: [
 		MeterstandenService,
