@@ -56,17 +56,6 @@ public class Util extends HttpServlet {
 			
 			Gson gson = new Gson();
 			response.getWriter().append(gson.toJson(map));
-		} else if (request.getParameter("q").equalsIgnoreCase("jaarverbruik")){
-			log.debug("Getting the jaarverbruik.");
-			Session session = HibernateUtil.getSessionFactory().openSession();
-			StringBuilder hql = new StringBuilder();
-			hql.append("from Jaarverbruik");
-			Query q = session.createQuery(hql.toString());
-			List<?> rl = q.getResultList();
-			
-			Gson gson = new Gson();
-			response.getWriter().append(gson.toJson(rl));
-
 		} else {
 			response.getWriter().append("Missing paramters.");
 		}
