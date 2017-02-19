@@ -3,6 +3,7 @@ export class Settings {
 	public static readonly maandverbruikURL = 'http://localhost:8080/meterstanden/maandverbruik';
 	public static readonly maandverbruikUtilURL = 'http://localhost:8080/meterstanden/util';
 	public static readonly overzichtmaandverbruikURL = 'http://localhost:8080/meterstanden/overzichtmaandverbruik';
+	public static readonly jaarverbruikURL = 'http://localhost:8080/meterstanden/jaaroverzicht';
 	public static readonly metersoortenURL = 'http://localhost:8080/meterstanden/metersoorten';
 	public static readonly meterstandenURL = 'http://localhost:8080/meterstanden/meterstanden';
 

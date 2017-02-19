@@ -49,8 +49,7 @@ public class Util extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (request.getParameter("q").equalsIgnoreCase("maandverbruikjaar"))
-		{
+		if (request.getParameter("q").equalsIgnoreCase("maandverbruikjaar")){
 			log.debug("getting maandverbruik_jaar");
 			List<?> rl = getDistinctJaren();
 			List<HashMap<String, Integer>> map = maanverbruikJaarToHashMap(rl);
