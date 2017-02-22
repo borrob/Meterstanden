@@ -45,7 +45,7 @@ import '../javascript_libs/Chart.min.js';
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-xs-12">
+				<div class="col-xs-12" id="chartParrent">
 					<canvas id="myChart" width="200px" height="100px"></canvas>
 				</div>
 			</div>
@@ -71,6 +71,10 @@ export class MaandverbruikGraphComponent implements OnInit{
 	selectedY2: number = 0;
 	selectedY3: number = 0;
 	myYears: MaandverbruikJaar[];
+	myXdata: string[];
+	myData: any;
+	myChart: any;
+	myOptions: any;
 
 	metersoortChangeUI(id: number): void{
 		this.selectedMetersoortId = id;
@@ -118,9 +122,7 @@ export class MaandverbruikGraphComponent implements OnInit{
 	}
 
 	draw(): void{
-		var ctx = document.getElementById('myChart');
-
-		var datasets=[];
+		let datasets=[];
 		if (this.myMaandverbruik1[0]){
 			datasets.push({
 				label: this.myMaandverbruik1[0].metersoort.metersoort + "-" + this.myMaandverbruik1[0].jaar,
@@ -155,12 +157,12 @@ export class MaandverbruikGraphComponent implements OnInit{
 			});
 		}
 
-		var myData = {
-			labels: Settings.graphXlabel,
+		this.myData = {
+			labels: this.myXdata,
 			datasets: datasets
 		};
 
-		var myOptions = {
+		this.myOptions = {
 			scales: {
 				yAxes: [{
 					ticks: {beginAtZero:true},
@@ -170,12 +172,9 @@ export class MaandverbruikGraphComponent implements OnInit{
 		};
 
 		//draw chart
-		var chart = new Chart(ctx, {
-			type: 'line',
-			data: myData,
-			options: myOptions
-			}
-		);
+		this.myChart.config.data = this.myData;
+		this.myChart.config.options = this.myOptions;
+		this.myChart.update();
 	}
 
 	maandverbruikToData(mv:Maandverbruik[]):number[]{
@@ -205,5 +204,38 @@ export class MaandverbruikGraphComponent implements OnInit{
 		this.metersoortChangeUI(this.selectedMetersoortId);
 		this.getJaren();
 		this.getMetersoorten();
+		this.myXdata = ['a', 'b'];
+		this.myDrawData1 = [0,0];
+
+		let datasets = [];
+		datasets.push({
+			label: 'temp',
+			data: this.myDrawData1
+		});
+
+		this.myData = {
+			labels: this.myXdata,
+			datasets: datasets
+		};
+
+		this.myOptions = {
+			scales: {
+				yAxes: [{
+					ticks: {beginAtZero:true},
+					scaleLabel: {display: true, labelString: "/maand"}
+				}]
+			}
+		};
+
+		//draw chart
+		var ctx = document.getElementById('myChart');
+		this.myChart = new Chart(ctx, {
+			type: 'line',
+			data: this.myData,
+			options: this.myOptions
+			}
+		);
+		this.myXdata = Settings.graphXlabel;
+		this.metersoortChangeUI(this.selectedMetersoortId);
 	}
 }
