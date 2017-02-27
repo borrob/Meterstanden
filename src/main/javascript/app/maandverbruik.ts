@@ -6,4 +6,6 @@ export class Maandverbruik {
 	maand: number;
 	metersoort: Metersoorten;
 	verbruik: number;
+	average: number;
+	delta: number;
 }
