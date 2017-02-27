@@ -42,6 +42,12 @@ import '../javascript_libs/Chart.min.js';
 							[value]="myY.jaar">{{myY.jaar}}
 						</option>
 					</select>
+					<input #c (change)="averageCheckboxChange(c.checked)"
+						type="checkbox"
+						name="averageview"
+						id="averageviewId"
+						checked />
+					<label for="averageview">Show average</label>
 				</div>
 			</div>
 			<div class="row">
@@ -66,10 +72,12 @@ export class MaandverbruikGraphComponent implements OnInit{
 	myMaandverbruik3: Maandverbruik[];
 	myDrawData3: number[];
 	myMetersoorten: Metersoorten[];
+	myAverageData: number[];
 	selectedMetersoortId: number = 1;
 	selectedY1: number = 2016;
 	selectedY2: number = 0;
 	selectedY3: number = 0;
+	showAverage: boolean = true;
 	myYears: MaandverbruikJaar[];
 	myXdata: string[];
 	myData: any;
@@ -96,6 +104,11 @@ export class MaandverbruikGraphComponent implements OnInit{
 		this.update();
 	}
 
+	averageCheckboxChange(c: boolean): void {
+		this.showAverage = c;
+		this.draw();
+	}
+
 	update(): void {
 		Promise.all([
 				this.maandverbruikService.getMaandverbruiken(this.selectedY1,this.selectedMetersoortId),
@@ -118,11 +131,26 @@ export class MaandverbruikGraphComponent implements OnInit{
 		this.myMaandverbruik3 = r[2];
 		this.myDrawData3 = this.maandverbruikToData(r[2]);
 
+		this.myAverageData = this.obtainAverage(r);
+
 		this.draw();
 	}
 
 	draw(): void{
 		let datasets=[];
+		
+		if (this.showAverage){
+			datasets.push({
+				label: 'Average',
+				data: this.myAverageData,
+				borderWidth: 2,
+				pointRadius: 3,
+				pointBackgroundColor: 'red',
+				pointBorderColor: 'red',
+				borderColor: 'red',
+				fill: false
+			})
+		}
 		if (this.myMaandverbruik1[0]){
 			datasets.push({
 				label: this.myMaandverbruik1[0].metersoort.metersoort + "-" + this.myMaandverbruik1[0].jaar,
@@ -184,6 +212,20 @@ export class MaandverbruikGraphComponent implements OnInit{
 				out.splice(mv[m].maand-1, 0, mv[m].verbruik);
 			} else {
 				out.push(null);
+			}
+		}
+		return out;
+	}
+
+	obtainAverage(mv:any):number[]{
+		let out = Array.apply(null, Array(12)).map(function () {});
+		for (let m in mv){
+			for (let a in mv[m]){
+				if (mv[m][a].maand !== null){
+					if (out[mv[m][a].maand -1] == null){
+						out[mv[m][a].maand-1] = mv[m][a].average;
+					}
+				}
 			}
 		}
 		return out;
