@@ -8,6 +8,7 @@ import {MetersoortenService} from './metersoorten.service';
 @Component({
 	moduleId: module.id,
 	selector: 'my-maandverbruik',
+	styles: ['.good {color: green}','.bad {color: red}'],
 	template: `
 		<div class="row">
 			<div class="col-xs-12">
@@ -31,7 +32,11 @@ import {MetersoortenService} from './metersoorten.service';
 							<td>{{m.jaar}}</td>
 							<td>{{m.maand}}</td>
 							<td *ngFor="let ms of m.mv">
-								<span *ngIf="ms">{{ms.verbruik | number: '1.1-1'}} {{ms.metersoort.unit}}/maand</span>
+								<span *ngIf="ms">
+									{{ms.verbruik | number: '1.1-1'}}
+									<span *ngIf="ms.delta < 0" class="good">({{ms.delta | number: '1.1-1'}})</span>
+									<span *ngIf="ms.delta >= 0" class="bad">(+{{ms.delta | number: '1.1-1'}})</span>
+									{{ms.metersoort.unit}}/maand</span>
 								<span *ngIf!="ms">--</span>
 							</td>
 						</tr>

@@ -3,7 +3,7 @@ package main.java.meterstanden.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "MAANDVERBRUIK", schema = "APP")
+@Table(name = "MAANDVERBRUIK_EXTRA", schema = "APP")
 public class Maandverbruik {
 	
 	//-----------// PRIVATE VARIABLES //-----------//
@@ -26,17 +26,31 @@ public class Maandverbruik {
 	
 	private float verbruik;
 	
+	private float average;
+	
+	private float delta;
+	
 	//-----------// CONSTRUCTORS //-----------//
 	public Maandverbruik() {
 		super();
 	}
-
+	
 	public Maandverbruik(int jaar, int maand, Metersoorten metersoort, float verbruik) {
 		super();
 		this.jaar = jaar;
 		this.maand = maand;
 		this.metersoort = metersoort;
 		this.verbruik = verbruik;
+	}
+
+	public Maandverbruik(int jaar, int maand, Metersoorten metersoort, float verbruik, float average, float delta) {
+		super();
+		this.jaar = jaar;
+		this.maand = maand;
+		this.metersoort = metersoort;
+		this.verbruik = verbruik;
+		this.average = average;
+		this.delta = delta;
 	}
 
 	//-----------// GETTERS & SETTERS //-----------//
@@ -80,13 +94,29 @@ public class Maandverbruik {
 	public void setVerbruik(float verbruik) {
 		this.verbruik = verbruik;
 	}
+	
+	public float getAverage() {
+		return average;
+	}
+
+	public void setAverage(float average) {
+		this.average = average;
+	}
+
+	public float getDelta() {
+		return delta;
+	}
+
+	public void setDelta(float delta) {
+		this.delta = delta;
+	}
 
 	//-----------// METHODS //-----------//
 	
 	@Override
 	public String toString() {
 		return "Maandverbruik [id=" + id + ", jaar=" + jaar + ", maand=" + maand + ", metersoort=" + metersoort
-				+ ", verbruik=" + verbruik + "]";
+				+ ", verbruik=" + verbruik + ", average=" + average + ", delta=" + delta + "]";
 	}
 
 }
