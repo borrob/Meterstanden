@@ -9,6 +9,7 @@ import org.hibernate.service.ServiceRegistry;
 
 import main.java.meterstanden.model.Jaarverbruik;
 import main.java.meterstanden.model.Maandverbruik;
+import main.java.meterstanden.model.MaandverbruikTab;
 import main.java.meterstanden.model.Metersoorten;
 import main.java.meterstanden.model.Meterstanden;
 import main.java.meterstanden.util.UpdateVerbruik;
@@ -52,6 +53,7 @@ public class HibernateUtil {
 			config.addAnnotatedClass(Metersoorten.class);
 			config.addAnnotatedClass(Meterstanden.class);
 			config.addAnnotatedClass(Maandverbruik.class);
+			config.addAnnotatedClass(MaandverbruikTab.class);
 			config.addAnnotatedClass(Jaarverbruik.class);
 			
 			sr = new StandardServiceRegistryBuilder().applySettings(
@@ -225,7 +227,7 @@ public class HibernateUtil {
 	 * @param mv the Maandverbruik to save in the database
 	 * @return true if succes, false if failure
 	 */
-	public static boolean persistMaandverbruik(Maandverbruik mv){
+	public static boolean persistMaandverbruik(MaandverbruikTab mv){
 		Session session = getSessionFactory().openSession();
 		try{
 			session.beginTransaction();
@@ -252,7 +254,7 @@ public class HibernateUtil {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();
-			Maandverbruik mv = session.get(Maandverbruik.class, id);
+			MaandverbruikTab mv = session.get(MaandverbruikTab.class, id);
 			session.delete("Maandverbruik", mv);
 			session.getTransaction().commit();
 			log.debug("Maandverbruik with id = " + Long.valueOf(id) + " is deleted.");

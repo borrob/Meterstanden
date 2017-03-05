@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import main.java.meterstanden.hibernate.HibernateUtil;
-import main.java.meterstanden.model.Maandverbruik;
+import main.java.meterstanden.model.MaandverbruikTab;
 import main.java.meterstanden.model.Metersoorten;
 import main.java.meterstanden.model.Meterstanden;
 
@@ -155,7 +155,7 @@ public class UpdateVerbruik {
 			try {
 					float verbruik = Month.getMonthUsage(m, j, ms.getMetersoort());
 					log.debug("Verbruik van " + Integer.toString(j) + "-" + Integer.toString(m) + ": " + Float.toString(verbruik));
-					Maandverbruik mv = new Maandverbruik(j, m, ms.getMetersoort(), verbruik);
+					MaandverbruikTab mv = new MaandverbruikTab(j, m, ms.getMetersoort(), verbruik);
 					HibernateUtil.persistMaandverbruik(mv);
 				} catch (IndexOutOfBoundsException e){
 					log.debug("Maandverbruik for " + Integer.toString(j) + "-" + Integer.toString(m) +
@@ -177,7 +177,7 @@ public class UpdateVerbruik {
 	 */
 	private static void deleteMeterverbruik(int m, int j, Metersoorten ms){
 		Session session = HibernateUtil.getSessionFactory().openSession();
-		Query q = session.createQuery("from Maandverbruik M where M.metersoort = :myMetersoort and M.maand = :myMaand and M.jaar = :myJaar");
+		Query q = session.createQuery("from MaandverbruikTab M where M.metersoort = :myMetersoort and M.maand = :myMaand and M.jaar = :myJaar");
 		q.setParameter("myMetersoort", ms);
 		q.setParameter("myMaand", m);
 		q.setParameter("myJaar", j);
@@ -185,7 +185,7 @@ public class UpdateVerbruik {
 		session.close();
 		Iterator<?> itr = rl.listIterator();
 		while (itr.hasNext()){
-			Maandverbruik mv = (Maandverbruik)itr.next();
+			MaandverbruikTab mv = (MaandverbruikTab)itr.next();
 			log.info("Deleting maandverbruikd: " + mv.toString());
 			HibernateUtil.deleteMaandverbruik(mv.getId());
 		}
@@ -204,7 +204,7 @@ public class UpdateVerbruik {
 		
 		//delete same year, but the rest of the months
 		StringBuilder hql = new StringBuilder(128);
-		hql.append("delete from Maandverbruik");
+		hql.append("delete from MaandverbruikTab");
 		if (before){
 			hql.append(" where maand <= :myMaand");
 		} else {
@@ -220,7 +220,7 @@ public class UpdateVerbruik {
 		
 		//delete other years
 		StringBuilder hql2 = new StringBuilder(128);
-		hql2.append("delete from Maandverbruik");
+		hql2.append("delete from MaandverbruikTab");
 		if (before){
 			hql2.append(" where jaar < :myJaar");
 		} else {

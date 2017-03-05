@@ -74,7 +74,7 @@ export class MaandverbruikGraphComponent implements OnInit{
 	myMetersoorten: Metersoorten[];
 	myAverageData: number[];
 	selectedMetersoortId: number = 1;
-	selectedY1: number = 2016;
+	selectedY1: number = 2017;
 	selectedY2: number = 0;
 	selectedY3: number = 0;
 	showAverage: boolean = true;
