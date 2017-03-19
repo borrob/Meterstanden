@@ -21,29 +21,33 @@ public class Meterstanden {
 	 */
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	@Column(name="ID")
+	private Integer id;
 	
 	/**
 	 * Date of the measurement of the meterstand
 	 */
 	@Temporal(TemporalType.DATE)
+	@Column(name="DATUM")
 	private Date datum;
 	
 	/**
 	 * The actual meterstand
 	 */
-	private float waarde;
+	@Column(name="WAARDE")
+	private double waarde;
 	
 	/**
 	 * Extra description of this meterstand
 	 */
+	@Column(name="OMSCHRIJVING")
 	private String omschrijving;
 	
 	/**
 	 * Metersoort of this meterstand
 	 */
 	@ManyToOne(cascade=CascadeType.REFRESH)
-	@JoinColumn(name="id_metersoort", referencedColumnName="id")
+	@JoinColumn(name="ID_METERSOORT", referencedColumnName="id")
 	private Metersoorten metersoort;
 
 	//-----------// CONSTRUCTORS //-----------//
@@ -59,11 +63,11 @@ public class Meterstanden {
 	}
 	
 	//-----------// GETTERS & SETTERS //-----------//
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -75,7 +79,7 @@ public class Meterstanden {
 		this.datum = datum;
 	}
 
-	public float getWaarde() {
+	public double getWaarde() {
 		return waarde;
 	}
 

@@ -47,14 +47,14 @@ public class Maandverbruik extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int year;
-		Long ms;
+		int ms;
 		
 		if (
 				request.getParameterMap().containsKey("year") &&
 				request.getParameterMap().containsKey("ms")
 		){
 			year = Integer.valueOf(request.getParameter("year"));
-			ms = Long.valueOf(request.getParameter("ms"));
+			ms = Integer.valueOf(request.getParameter("ms"));
 		} else {
 			log.error("Maandverbruik requested, but no parameters were given.");
 			throw new ServletException("missing parameters");
@@ -85,7 +85,7 @@ public class Maandverbruik extends HttpServlet {
 	 * @param year the selected year
 	 * @return a list of the maandverbruiken
 	 */
-	private List<?> getMaandverbruik(Long ms, int year){
+	private List<?> getMaandverbruik(int ms, int year){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Metersoorten metersoort = session.get(Metersoorten.class, ms);
 		

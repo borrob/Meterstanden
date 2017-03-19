@@ -87,7 +87,7 @@ public class OverzichtMaandverbruik extends HttpServlet {
 		
 		StringBuilder hql = new StringBuilder();
 		hql.append("select distinct mv.maand, mv.jaar");
-		hql.append(" from Maandverbruik mv");
+		hql.append(" from MaandverbruikTab mv");
 		hql.append(" order by mv.jaar desc, mv.maand desc");
 		Query qMaandverbruiken = session.createQuery(hql.toString());
 		qMaandverbruiken.setMaxResults(20);

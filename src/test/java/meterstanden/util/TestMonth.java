@@ -25,7 +25,7 @@ public class TestMonth {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		
 		Metersoorten ms = session.get(Metersoorten.class, 1L);
-		float calculatedMeterstand = Month.getMonth(6, 2016, ms);
+		double calculatedMeterstand = Month.getMonth(6, 2016, ms);
 				
 		Query meterstandenQuery = session.createQuery(
 				"from Meterstanden m where m.metersoort = :mes order by datum asc");
@@ -40,9 +40,9 @@ public class TestMonth {
 		session.close();
 		
 		log.debug("Lowest - calculated - Highest: " + 
-				Float.toString(lowest.getWaarde()) + " - " +
-				Float.toString(calculatedMeterstand) + " - " +
-				Float.toString(highest.getWaarde()));
+				Double.toString(lowest.getWaarde()) + " - " +
+				Double.toString(calculatedMeterstand) + " - " +
+				Double.toString(highest.getWaarde()));
 		
 		assertTrue(calculatedMeterstand > 0);
 		assertTrue(calculatedMeterstand >= lowest.getWaarde());
@@ -57,8 +57,8 @@ public class TestMonth {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		
 		Metersoorten ms = session.get(Metersoorten.class, 1L);
-		float calculatedMeterstand = Month.getMonth(6, 2016, ms);
-		float calculatedMeterstand2 = Month.getNextMonth(5, 2016, ms);
+		double calculatedMeterstand = Month.getMonth(6, 2016, ms);
+		double calculatedMeterstand2 = Month.getNextMonth(5, 2016, ms);
 		
 		session.close();
 				
@@ -73,9 +73,9 @@ public class TestMonth {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		
 		Metersoorten ms = session.get(Metersoorten.class, 1L);
-		float usage = Month.getMonthUsage(6, 2016, ms);
+		double usage = Month.getMonthUsage(6, 2016, ms);
 		
-		log.debug("The usage is: " + Float.toString(usage));
+		log.debug("The usage is: " + Double.toString(usage));
 		
 		session.close();
 		

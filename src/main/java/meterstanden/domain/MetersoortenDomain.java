@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import main.java.meterstanden.hibernate.HibernateUtil;
 import main.java.meterstanden.model.Metersoorten;
@@ -50,7 +51,7 @@ public class MetersoortenDomain extends HttpServlet {
 		
 		List<Metersoorten> myMetersoorten = getMetersoorten();
 		
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().setDateFormat("dd-mm-yyyy").create();
 		log.debug("The metersoorten JSON:");
 		log.debug(gson.toJson(myMetersoorten));
 		response.getWriter().append(gson.toJson(myMetersoorten));

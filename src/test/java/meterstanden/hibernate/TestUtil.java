@@ -71,7 +71,7 @@ public class TestUtil {
 		HibernateUtil.persistMeterstand(ms);
 			
 		//check if the meterstand is really added
-		long theId = ms.getId();
+		int theId = ms.getId();
 		Session session2 = HibernateUtil.getSessionFactory().openSession();
 		Meterstanden shouldExists = session2.get(Meterstanden.class, theId);
 		session2.close();

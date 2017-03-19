@@ -9,7 +9,7 @@ import javax.persistence.*;
  *
  */
 @Entity
-@Table(name = "metersoorten", schema = "APP")
+@Table(name = "METERSOORTEN", schema = "APP")
 public class Metersoorten {
 
 	//-----------// PRIVATE VARIABLES //-----------//
@@ -20,16 +20,19 @@ public class Metersoorten {
 	 */
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	@Column(name="ID")
+	private Integer id;
 	
 	/**
 	 * Descriptive text of the meter.
 	 */
+	@Column(name="METERSOORT")
 	private String metersoort;
 	
 	/**
 	 * The unit of this meter.
 	 */
+	@Column(name="UNIT")
 	private String unit;
 	
 	//-----------// CONSTRUCTORS //-----------//
@@ -45,11 +48,11 @@ public class Metersoorten {
 
 	//-----------// GETTER AND SETTERS //-----------//
 	
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

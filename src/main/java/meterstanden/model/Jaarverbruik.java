@@ -1,27 +1,35 @@
 package main.java.meterstanden.model;
+
 import java.io.Serializable;
 
 import javax.persistence.*;
 
-@Entity @IdClass(Jaarverbruik.class)
+@Entity
 @Table(name = "JAARVERBRUIK", schema = "APP")
 public class Jaarverbruik implements Serializable {
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2711735179826916347L;
 
-	//-----------// PRIVATE VARIABLES //-----------//	
+	//private static final long serialVersionUID = 1L;
+	
+	//-----------// PRIVATE VARIABLES //-----------//
 	@Id
-	private Long id;
+	@Column(name="ID")
+	private int id;
 	
 	@Id
+	@Column(name="MS")
 	private String ms;
 	
+	@Id
+	@Column(name="JAAR")
 	private int jaar;
 	
-	private float som;
+	@Column(name="SOM")
+	private double som;
 	
 	//-----------// CONSTRUCTORS //-----------//
 	public Jaarverbruik() {
@@ -30,11 +38,11 @@ public class Jaarverbruik implements Serializable {
 	
 	//-----------// GETTERS & SETTERS //-----------//
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -54,7 +62,7 @@ public class Jaarverbruik implements Serializable {
 		this.jaar = jaar;
 	}
 
-	public float getSom() {
+	public double getSom() {
 		return som;
 	}
 

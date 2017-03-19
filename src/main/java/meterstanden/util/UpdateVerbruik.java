@@ -153,8 +153,8 @@ public class UpdateVerbruik {
 
 			deleteMeterverbruik(m,j,ms.getMetersoort()); //delete old entry first	
 			try {
-					float verbruik = Month.getMonthUsage(m, j, ms.getMetersoort());
-					log.debug("Verbruik van " + Integer.toString(j) + "-" + Integer.toString(m) + ": " + Float.toString(verbruik));
+					double verbruik = Month.getMonthUsage(m, j, ms.getMetersoort());
+					log.debug("Verbruik van " + Integer.toString(j) + "-" + Integer.toString(m) + ": " + Double.toString(verbruik));
 					MaandverbruikTab mv = new MaandverbruikTab(j, m, ms.getMetersoort(), verbruik);
 					HibernateUtil.persistMaandverbruik(mv);
 				} catch (IndexOutOfBoundsException e){

@@ -19,7 +19,7 @@ import '../javascript_libs/jquery-3.1.1.min.js';
 				<select name="meterstand_metersoort_select" #ms (change)="metersoortChangeUI(ms.value)">
 					<option value=0>All</option>
 					<option *ngFor="let m of myMetersoorten"
-						[value]="m.id">{{m.metersoort}}
+						[value]="m.ID">{{m.metersoort}}
 					</option>
 				</select>
 				<button (click)="newMeterstand()" class="btn btn-primary">new meterstand</button>
@@ -251,7 +251,10 @@ export class MeterstandenComponent implements OnInit{
 				this.selectedMeterstand = this.myMeterstanden[i];
 			}
 		}
-		$('#updateDatefield').val(new Date(this.selectedMeterstand.datum).toISOString().substr(0,10));
+		$('#updateDatefield').val(this.selectedMeterstand.datum);
+		$('#updateMetersoortfield').val(this.selectedMeterstand.metersoort.id);
+		$('#updateOmschrijvingfield').val(this.selectedMeterstand.omschrijving);
+		$('#updateWaardefield').val(this.selectedMeterstand.waarde);
 		$('#updateMeterstandModal').modal();
 	}
 

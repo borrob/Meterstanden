@@ -26,7 +26,7 @@ public class Month {
 	 * @return the meterstand value of Metersoorten ms for mont - year.
 	 * @throws IndexOutOfBoundsException If there is no meterstand to get.
 	 */
-	public static float getMonth(int month, int year, Metersoorten ms) throws IndexOutOfBoundsException{
+	public static double getMonth(int month, int year, Metersoorten ms) throws IndexOutOfBoundsException{
 
 		Meterstanden first = null;
 		Meterstanden last = null;
@@ -55,11 +55,11 @@ public class Month {
 			long timeToStart = maandDag.getTime() - first.getDatum().getTime();
 			log.trace("timeBetween: " + Long.toString(timeBetween) + " - timeToStart: " + Long.toString(timeToStart));
 			
-			float result = first.getWaarde() + (float)timeToStart/timeBetween * (last.getWaarde() - first.getWaarde());
+			double result = first.getWaarde() + (float)timeToStart/timeBetween * (last.getWaarde() - first.getWaarde());
 			
-			log.trace("First: " + Float.toString(first.getWaarde()));
-			log.trace("Result: " + Float.toString(result));
-			log.trace("Last: " + Float.toString(last.getWaarde()));
+			log.trace("First: " + Double.toString(first.getWaarde()));
+			log.trace("Result: " + Double.toString(result));
+			log.trace("Last: " + Double.toString(last.getWaarde()));
 			
 			return result;
 		}
@@ -76,7 +76,7 @@ public class Month {
 	 * @return the reading of the Meterstand for the next month
 	 * @throws IndexOutOfBoundsException if there is no meterstand to get.
 	 */
-	public static float getNextMonth(int month, int year, Metersoorten ms) throws IndexOutOfBoundsException{
+	public static double getNextMonth(int month, int year, Metersoorten ms) throws IndexOutOfBoundsException{
 		if (month == 12){
 			month = 0;
 			year ++;
@@ -96,9 +96,9 @@ public class Month {
 	 * @return the usage of the Metersoort in this specific month
 	 * @throws IndexOutOfBoundsException If the usage cannot be calculated.
 	 */
-	public static float getMonthUsage(int month, int year, Metersoorten ms) throws IndexOutOfBoundsException{
-		float start = getMonth(month, year, ms);
-		float end = getNextMonth(month, year, ms);
+	public static double getMonthUsage(int month, int year, Metersoorten ms) throws IndexOutOfBoundsException{
+		double start = getMonth(month, year, ms);
+		double end = getNextMonth(month, year, ms);
 		return end - start;
 	}
 	

@@ -1,34 +1,42 @@
 package main.java.meterstanden.model;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "MAANDVERBRUIK_EXTRA", schema = "APP")
-public class Maandverbruik {
+public class Maandverbruik implements Serializable{
 	
 	//-----------// PRIVATE VARIABLES //-----------//
-	/**
-	 * The ID of the table row.
-	 * 
-	 * This ID is generate by the database. It has the primary key and therefore should be unique.
-	 */
+
+	private static final long serialVersionUID = -6608899500040103404L;
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="ID", columnDefinition = "integer")
 	private Long id;
 	
+	@Id
+	@Column(name="JAAR")
 	private int jaar;
 	
+	@Id
+	@Column(name="MAAND")
 	private int maand;
 	
+	@Id
 	@ManyToOne(cascade=CascadeType.REFRESH)
-	@JoinColumn(name="id_metersoort", referencedColumnName="id")
+	@JoinColumn(name="ID_METERSOORT", referencedColumnName="id")
 	private Metersoorten metersoort;
 	
-	private float verbruik;
+	@Column(name="VERBRUIK")
+	private double verbruik;
 	
-	private float average;
+	@Column(name="AVERAGE")
+	private double average;
 	
-	private float delta;
+	@Column(name="DELTA")
+	private double delta;
 	
 	//-----------// CONSTRUCTORS //-----------//
 	public Maandverbruik() {
@@ -87,27 +95,27 @@ public class Maandverbruik {
 		this.metersoort = metersoort;
 	}
 
-	public float getVerbruik() {
+	public double getVerbruik() {
 		return verbruik;
 	}
 
-	public void setVerbruik(float verbruik) {
+	public void setVerbruik(double verbruik) {
 		this.verbruik = verbruik;
 	}
 	
-	public float getAverage() {
+	public double getAverage() {
 		return average;
 	}
 
-	public void setAverage(float average) {
+	public void setAverage(double average) {
 		this.average = average;
 	}
 
-	public float getDelta() {
+	public double getDelta() {
 		return delta;
 	}
 
-	public void setDelta(float delta) {
+	public void setDelta(double delta) {
 		this.delta = delta;
 	}
 

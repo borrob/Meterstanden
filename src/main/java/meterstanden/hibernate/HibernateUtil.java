@@ -126,7 +126,7 @@ public class HibernateUtil {
 	 * @param id the id of the meterstand to delete.
 	 * @return true if success, false if failure.
 	 */
-	public static boolean deleteMeterstand(Long id){
+	public static boolean deleteMeterstand(Integer id){
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();

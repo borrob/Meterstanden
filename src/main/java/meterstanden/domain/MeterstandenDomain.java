@@ -15,11 +15,14 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import main.java.meterstanden.hibernate.HibernateUtil;
 import main.java.meterstanden.model.Metersoorten;
 import main.java.meterstanden.model.Meterstanden;
 import main.java.meterstanden.util.UpdateVerbruik;
+
+
 
 /**
  * Servlet implementation class Meterstanden
@@ -32,8 +35,12 @@ import main.java.meterstanden.util.UpdateVerbruik;
 				"/METERSTANDEN"
 		})
 public class MeterstandenDomain extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(Meterstanden.class);
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8705366207131952124L;
+	private static final Logger log = Logger.getLogger(MeterstandenDomain.class);
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -55,7 +62,7 @@ public class MeterstandenDomain extends HttpServlet {
 						0;
 		List<Meterstanden> myMeterstanden = getLastMeterstanden(Integer.toString(ms), p);
 		
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
 		log.debug("The meterstanden JSON:");
 		log.debug(gson.toJson(myMeterstanden));
 		response.getWriter().append(gson.toJson(myMeterstanden));
@@ -114,9 +121,9 @@ public class MeterstandenDomain extends HttpServlet {
 	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
 	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Long ms;
+		Integer ms;
 		if (request.getParameterMap().containsKey("ms")){
-			ms = Long.valueOf(request.getParameter("ms")); 
+			ms = Integer.valueOf(request.getParameter("ms")); 
 		} else {
 			log.error("Deleting meterstand, but no parameters were given.");
 			throw new ServletException("missing parameters");

@@ -5,33 +5,38 @@ import javax.persistence.*;
 @Entity
 @Table(name = "MAANDVERBRUIK", schema = "APP")
 public class MaandverbruikTab {
-	
+
 	//-----------// PRIVATE VARIABLES //-----------//
 	/**
 	 * The ID of the table row.
 	 * 
 	 * This ID is generate by the database. It has the primary key and therefore should be unique.
 	 */
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="ID", columnDefinition = "integer")
 	private Long id;
 	
+	@Column(name="JAAR")
 	private int jaar;
 	
+	@Column(name="MAAND")
 	private int maand;
 	
 	@ManyToOne(cascade=CascadeType.REFRESH)
-	@JoinColumn(name="id_metersoort", referencedColumnName="id")
+	@JoinColumn(name="ID_METERSOORT", referencedColumnName="ID")
 	private Metersoorten metersoort;
 	
-	private float verbruik;
+	@Column(name="VERBRUIK")
+	private double verbruik;
 		
 	//-----------// CONSTRUCTORS //-----------//
 	public MaandverbruikTab() {
 		super();
 	}
 	
-	public MaandverbruikTab(int jaar, int maand, Metersoorten metersoort, float verbruik) {
+	public MaandverbruikTab(int jaar, int maand, Metersoorten metersoort, double verbruik) {
 		super();
 		this.jaar = jaar;
 		this.maand = maand;
@@ -39,7 +44,7 @@ public class MaandverbruikTab {
 		this.verbruik = verbruik;
 	}
 
-	public MaandverbruikTab(int jaar, int maand, Metersoorten metersoort, float verbruik, float average, float delta) {
+	public MaandverbruikTab(int jaar, int maand, Metersoorten metersoort, double verbruik, double average, double delta) {
 		super();
 		this.jaar = jaar;
 		this.maand = maand;
@@ -81,7 +86,7 @@ public class MaandverbruikTab {
 		this.metersoort = metersoort;
 	}
 
-	public float getVerbruik() {
+	public double getVerbruik() {
 		return verbruik;
 	}
 
